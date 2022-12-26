@@ -29,7 +29,7 @@
 
 <script>
 export default {
-
+  name:'Header',
 }
 </script>
 
@@ -49,7 +49,7 @@ export default {
   }
 
   nav {
-    background-color: rgb(233, 227, 227);
+    background-color: #eaeaea;
     width: 100%;
     height: 30px;
     display: flex;
