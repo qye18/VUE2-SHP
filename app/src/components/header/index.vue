@@ -3,8 +3,8 @@
     <nav>
       <div class="nav-left">
         <li>尚品汇欢迎您</li>
-        <li>请<a href="#">登录</a></li>
-        <li><a href="#">免费注册</a></li>
+        <li>请<router-link to="./login">登录</router-link></li>
+        <li><router-link to="./register">免费注册</router-link></li>
       </div>
       <div class="nav-right">
         <li><a href="#">我的订单</a></li>
@@ -18,10 +18,12 @@
       </div>
     </nav>
     <div class="header-bot">
-      <img src="./images/logo.png" alt="logo" />
+      <router-link to="/home">
+        <img src="./images/logo.png" alt="logo" />
+      </router-link>
       <div class="search-box">
         <input type="text">
-        <button>搜索</button>
+        <button @click="searchPush">搜索</button>
       </div>
     </div>
   </div>
@@ -30,6 +32,11 @@
 <script>
 export default {
   name:'Header',
+  methods:{
+    searchPush() {
+      this.$router.push({name:'search'})
+    },
+  }
 }
 </script>
 
@@ -37,6 +44,9 @@ export default {
   * {
     font-size: 12px;
     text-decoration: none;
+  }
+  button, img {
+    cursor: pointer;
   }
   a {
     color: #000;

@@ -26,5 +26,10 @@ export default new VueRouter({
       path:"/search",
       component:Search
     },
+    //重定向，跳转到redirect指定的路径
+    {
+      path:'*',
+      redirect:'/home'
+    }
   ]
 })
