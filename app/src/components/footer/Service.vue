@@ -1,6 +1,6 @@
 <template>
   <div class="service">
-    <h4>服务</h4>
+    <h4>{{ title }}</h4>
     <slot></slot>
   </div>
 </template>
@@ -8,6 +8,7 @@
 <script>
 export default {
   name:'Service',
+  props:['title']
 }
 </script>
 

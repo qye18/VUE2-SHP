@@ -1,35 +1,35 @@
 <template>
   <div class="footer">
     <div class="services">
-      <Service>
+      <Service title="购物指南">
         <ul>
           <li v-for="(s,index) in services.guide" :key="index">
             {{ s }}
           </li>
         </ul>
       </Service>
-      <Service>
+      <Service title="配送方式">
         <ul>
           <li v-for="(s,index) in services.diliveryMethod" :key="index">
             {{ s }}
           </li>
         </ul>
       </Service>
-      <Service>
+      <Service title="支付方式">
         <ul>
           <li v-for="(s,index) in services.paymentMethod" :key="index">
             {{ s }}
           </li>
         </ul>
       </Service>
-      <Service>
+      <Service title="售后服务">
         <ul>
           <li v-for="(s,index) in services.afterSale" :key="index">
             {{ s }}
           </li>
         </ul>
       </Service>
-      <Service>
+      <Service title="特色服务">
         <ul>
           <li v-for="(s,index) in services.special" :key="index">
             {{ s }}
