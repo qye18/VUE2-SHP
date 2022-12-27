@@ -37,7 +37,7 @@
         </ul>
       </Service>
       <Service>
-
+        <img src="./images/wx_cz.jpg" alt="二维码">
       </Service>
     </div>
   <ul class="contact">
