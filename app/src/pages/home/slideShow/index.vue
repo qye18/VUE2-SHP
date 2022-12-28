@@ -100,7 +100,6 @@ export default {
     margin: 5px;
   }
 
-
   /* 轮播图 */
   .container .slide-show {
     width: 700px;
@@ -139,13 +138,13 @@ export default {
 
   .dots {
     position: absolute;
-    left: 50%;
+    left: 35%;
     bottom: 10px;
   }
   .dots span{
     font-size: 0px;
     margin: 5px;
-    border: 4px solid rgba(100, 100,100,0.7);
+    border: 4px solid rgba(200, 200, 200, 0.7);
     border-radius: 100%;
     cursor: pointer;
   }

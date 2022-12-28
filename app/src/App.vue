@@ -22,4 +22,13 @@ export default {
 
 <style>
 
+  .title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
 </style>
