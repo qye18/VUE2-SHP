@@ -19,11 +19,11 @@
     </nav>
     <div class="header-bot">
       <router-link to="/home">
-        <img src="./images/logo.png" alt="logo" />
+        <img class="logo" src="./images/logo.png" alt="logo" />
       </router-link>
       <div class="search-box">
-        <input type="text">
-        <button @click="searchPush">搜索</button>
+        <input type="text" v-model="searchResult">
+        <button @click="searchPush(searchResult)">搜索</button>
       </div>
     </div>
   </div>
@@ -32,9 +32,20 @@
 <script>
 export default {
   name:'Header',
+  data() {
+    return {
+      searchResult:''||undefined
+    }
+  },
   methods:{
-    searchPush() {
-      this.$router.push({name:'search'})
+    searchPush(searchResult) {
+      this.$router.push({
+        name:'search',
+        params:{
+          result:searchResult
+        }
+      })
+      this.searchResult = '';
     },
   }
 }
@@ -55,13 +66,13 @@ export default {
   
   .header {
     width: 100%;
-    height: 130px;
+    height: 110px;
   }
 
   nav {
     background-color: #eaeaea;
     width: 100%;
-    height: 30px;
+    height: 35px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -90,17 +101,17 @@ export default {
     border-right: none;
   }
 
-  .search-box {
-    border: 2px solid rgb(227, 1, 1);
-  }
   .header-bot {
     height: 100px;
-    padding: 10px 40px 10px 75px;
+    padding: 0px 40px 10px 75px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
+  .header-bot .logo {
+    margin-left: -50px;
+  }
   .header-bot .search-box {
     width: 570px;
     height: 30px;
@@ -112,7 +123,11 @@ export default {
 
   .header-bot .search-box input {
     width: 87%;
-    border: none;
+    padding-left: 5px;
+    height: 100%;
+    border: 1px solid red;
+    outline: none;
+    font-size: large;
   }
 
   .header-bot .search-box button {
