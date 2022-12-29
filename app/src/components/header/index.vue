@@ -102,8 +102,10 @@ export default {
   }
 
   .header-bot {
+    width: 1155px;
+    margin: 0 auto;
     height: 100px;
-    padding: 0px 40px 10px 75px;
+    padding: 0 0 10px 75px;
     display: flex;
     justify-content: space-between;
     align-items: center;
