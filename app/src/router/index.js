@@ -3,7 +3,8 @@ import Home from '@/pages/home'
 import Login from '@/pages/login'
 import Register from '@/pages/register'
 import Search from '@/pages/search'
-
+import AccoutLogin from '@/pages/login/accountLogin'
+import QrcodeLogin from '@/pages/login/qrcodeLogin'
 export default new VueRouter({
   routes:[
     {
@@ -20,7 +21,19 @@ export default new VueRouter({
       component:Login,
       meta:{
         hasFooter:false
-      }
+      },
+      children:[
+        {
+          name:'accountLogin',
+          path:'accountLogin',
+          component:AccoutLogin
+        },
+        {
+          name:'qrcodeLogin',
+          path:'qrcodeLogin',
+          component: QrcodeLogin
+        }
+      ]
     },
     {
       name:'register',
@@ -43,6 +56,10 @@ export default new VueRouter({
     {
       path:'*',
       redirect:'/home'
+    },
+    {
+      path:'/login',
+      redirect:'/login/accountLogin'
     }
   ]
 })
