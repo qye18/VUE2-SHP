@@ -1,15 +1,148 @@
 <template>
-  <div>
-    我是register组件
+  <div class="register">
+    <div class="mid">
+      <div class="title">
+      <h3>注册新用户</h3>
+      <h4>我有账号，去
+        <router-link to="./login">登录</router-link>
+      </h4>
+    </div>
+    <form class="register-content" action="get">
+      <div>
+        手机号：
+        <input type="text" placeholder="请输入你的手机号">
+        <button>获取验证码</button>
+      </div>
+      <div>
+        验证码：
+        <input type="text">
+      </div>
+      <div>
+        登录密码：
+        <input type="password">
+      </div>
+      <div>
+        确认密码：
+        <input type="password">
+      </div>
+      <div>
+        昵称：
+        <input type="text">
+      </div>
+      <div>
+        <label for="register-agreement">
+          <input id="register-agreement" type="checkbox">
+          <span>同意协议并注册《品优购用户协议</span>
+        </label>
+      </div>
+      <div class="submit">
+        <button>马上注册</button>
+      </div>
+    </form>
+    </div>
+    <Contact></Contact>
   </div>
 </template>
 
 <script>
+import Contact from '@/components/footer/contact'
 export default {
   name:'Register',
+  components:{Contact}
 }
 </script>
 
-<style>
+<style scoped>
+  .register {
+    width: 1155px;
+    height: 500px;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
+  .register .mid {
+    border: 1px solid rgb(220,220,220);
+  }
 
+  .register .title {
+    background: #eaeaea;
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .register .title h4 {
+    font-size: 13px;
+  }
+
+  .register .title h4 a {
+    color:rgb(227, 1, 1);
+  }
+
+  .register .title h4 a:hover {
+    text-decoration: underline;
+  }
+
+  .register .register-content {
+    margin-top: 10px;
+    padding: 20px;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .register .register-content > * {
+    height: 45px;
+  }
+  
+  .register .register-content div {
+    width: 350px;
+    text-align: right;
+    margin: 5px auto;
+    /* background-color: antiquewhite; */
+  }
+
+  .register .register-content div input {
+    height: 80%;
+    width: 250px;
+    padding: 5px;
+    outline: none;
+    border: 1px solid rgb(140,140,140);
+  }
+  
+  .register .register-content div:first-child input {
+    width: 160px;
+  }
+
+  .register .register-content div:first-child button {
+    width: 80px;
+    height: 75%;
+    margin: 0 5px;
+    color: white;
+    background-color: rgb(8, 184, 243);
+  }
+
+  .register .register-content div:nth-child(6){
+    height: 15px;
+    margin-bottom: 30px;
+  }
+  .register .register-content label span {
+    width: 235px;
+    display: inline-block;
+    font-size: 12px;
+    text-align: left;
+  }
+  .register .register-content label input{
+    width: 15px;
+    vertical-align: middle;
+  }
+
+  .register .register-content .submit button {
+    width: 250px;
+    height: 80%;
+    background-color:rgb(227, 1, 1);
+    color: white;
+  }
+
+  button {
+    cursor: pointer;
+  }
 </style>
