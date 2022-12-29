@@ -12,21 +12,23 @@ export default new VueRouter({
       path:'/home',
       component:Home,
       meta:{
-        hasFooter:true
+        hasFooter:true,
+        showTopNav:true
       }
     },
     {
       name:'login',
       path:"/login",
       component:Login,
+      redirect:{name:'accountLogin'},
       meta:{
-        hasFooter:false
+        hasFooter:false,
       },
       children:[
         {
           name:'accountLogin',
           path:'accountLogin',
-          component:AccoutLogin
+          component:AccoutLogin,
         },
         {
           name:'qrcodeLogin',
@@ -49,7 +51,8 @@ export default new VueRouter({
       path:'/search/:result?',
       component:Search,
       meta:{
-        hasFooter:true
+        hasFooter:true,
+        showTopNav:true
       }
     },
     //重定向，跳转到redirect指定的路径
@@ -57,9 +60,5 @@ export default new VueRouter({
       path:'*',
       redirect:'/home'
     },
-    {
-      path:'/login',
-      redirect:'/login/accountLogin'
-    }
   ]
 })

@@ -40,22 +40,18 @@
       </div>
     </form>
     </div>
-    <Contact></Contact>
   </div>
 </template>
 
 <script>
-import Contact from '@/components/footer/contact'
 export default {
   name:'Register',
-  components:{Contact}
 }
 </script>
 
 <style scoped>
   .register {
     width: 1155px;
-    height: 500px;
     margin: 0 auto;
     margin-top: 20px;
   }
@@ -145,4 +141,5 @@ export default {
   button {
     cursor: pointer;
   }
+
 </style>

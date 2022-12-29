@@ -40,7 +40,6 @@
         <img src="./images/wx_cz.jpg" alt="二维码">
       </Service>
     </div>
-    <Contact></Contact>
   </div>
 </template>
 
@@ -66,7 +65,7 @@ export default {
 <style scoped>
   .footer {
     background-color: #eaeaea;
-    padding: 30px 60px;
+    padding: 30px 60px 0;
   }
 
   .services {
