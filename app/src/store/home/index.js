@@ -4,24 +4,37 @@ import { reqCategoryList } from '@/api';
 Vue.use(Vuex);
 
 // const categoryListres = reqCategoryList();
-let categoryList = [];
-reqCategoryList().then(
-  (res) => {
-    // console.log(res.data);
-    res.data.forEach(category => {
-      categoryList.push(category);
-    });
-  },
-  (err) => {
-    alert('错误：',err)
-  }
-)
+
 
 const state = {
-  categoryList,
+  categoryList:[],
 };
-const actions = {};
-const mutations = {};
+const actions = {
+  async categoryList({commit}) {
+    // let categoryList = [];
+    // reqCategoryList().then(
+    //   (res) => {
+    //     // console.log(res.data);
+    //     res.data.forEach(category => {
+    //       categoryList.push(category);
+    //     });
+    //   },
+    //   (err) => {
+    //     alert('错误：',err)
+    //   }
+    // )
+    let result = await reqCategoryList();
+    if(result.code == 200) {
+      commit("CATEGORYLIST", result.data)
+    }
+    
+  }
+};
+const mutations = {
+  CATEGORYLIST(state, categoryList) {
+    state.categoryList = categoryList;
+  }
+};
 const getters = {};
 
 

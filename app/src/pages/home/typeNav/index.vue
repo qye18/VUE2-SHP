@@ -15,18 +15,26 @@
     </div>
     <div class="bottom-nav">
       <div class="item" 
-        v-for="category in $store.state.homeStore.categoryList" 
-        :key="category.categoryId">
-        <h5><a href="">{{ category.categoryName }}</a></h5>
+        v-for="category in $store.state.home.categoryList" 
+        :key="category.categoryId"
+         @click="goSearch">
+        <h5><a :data-categoryName="category.categoryName"
+          :data-category1Id="category.categoryId">{{ category.categoryName }}</a></h5>
         <div class="item-list test">
           <dl class="sub-item-list" 
             v-for="category2 in category.categoryChild" 
             :key="category2.categoryId">
             <dd>
-              <a href="#">{{ category2.categoryName}}</a>
-              <a href="#"
-              v-for="category3 in category2.categoryChild"
-              :key="category3.categoryId">{{category3.categoryName}}</a>              </dd>
+              <a :data-categoryName="category2.categoryName"
+              :data-category2Id="category2.categoryId">
+                {{ category2.categoryName}}
+              </a>
+              <a :data-categoryName="category3.categoryName"
+              :data-category3Id="category3.categoryId" v-for="category3 in category2.categoryChild"
+                :key="category3.categoryId">
+                {{category3.categoryName}}
+              </a>
+            </dd>
           </dl>
         </div>
       </div>
@@ -35,9 +43,34 @@
 </template>
 
 <script>
+
 export default {
   name:'TypeNav',
-  
+  mounted() {
+    this.$store.dispatch('categoryList');
+  },
+  methods: {
+    goSearch({target}) {
+      console.log(target.dataset);
+      let {categoryname, category1id, category2id, category3id} = target.dataset
+      if (categoryname) {
+        let query = {categoryName: categoryname};
+        if (category1id) {
+          query.category1Id = category1id;
+        } else if (category2id) {
+          query.category2Id = category2id;
+        } else {
+          query.category3Id = category3id;
+        }
+        console.log(query);
+        this.$router.push(
+            {
+              name:'search',
+              query
+            })
+      }
+    }
+  }
 }
 </script>
 
