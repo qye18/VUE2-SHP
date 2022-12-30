@@ -1,33 +1,8 @@
-import Vue from 'vue';
-import VueX from 'vuex';
-import { reqCategoryList } from '@/api';
-Vue.use(VueX);
+import Vue from 'vue'
+import Vuex from 'vuex'
+import homeStore from './home'
 
-// const categoryListres = reqCategoryList();
-let categoryList = [];
-reqCategoryList().then(
-  (res) => {
-    // console.log(res.data);
-    res.data.forEach(category => {
-      categoryList.push(category);
-    });
-  },
-  (err) => {
-    alert('错误：',err)
-  }
-)
-
-const actions = {};
-const mutations = {};
-const state = {
-  categoryList,
-};
-
-
-export default new VueX.Store({
-  actions,
-  mutations,
-  state
-})
-
+export default new Vuex.Store({modules:{
+  homeStore: homeStore
+}})
 

@@ -15,7 +15,7 @@
     </div>
     <div class="bottom-nav">
       <div class="item" 
-        v-for="category in $store.state.categoryList" 
+        v-for="category in $store.state.homeStore.categoryList" 
         :key="category.categoryId">
         <h5><a href="">{{ category.categoryName }}</a></h5>
         <div class="item-list test">
