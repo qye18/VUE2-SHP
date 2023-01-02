@@ -3,7 +3,7 @@
     <TopNav v-show="$route.meta.showTopNav"></TopNav>
     <Header></Header>
     <router-view></router-view>
-    <Footer v-show="$route.meta.hasFooter"></Footer>
+    <Footer class="foot" v-show="$route.meta.hasFooter"></Footer>
     <Contact></Contact>
   </div>
 </template>
@@ -20,7 +20,8 @@ export default {
   },
   mounted(){
     // console.log(this.$router);
-    console.log(this.$store);
+    // console.log(this.$store);
+    this.$store.dispatch("categoryList");
   }
 }
 </script>
@@ -36,4 +37,5 @@ export default {
     text-decoration: none;
     color: black;
   }
+
 </style>

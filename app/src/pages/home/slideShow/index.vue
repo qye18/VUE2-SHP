@@ -63,6 +63,10 @@ export default {
       left:0
     }
   },
+  mounted() {
+    this.$store.dispatch('getBannerList')
+    // console.log(this.$store.state.home.bannerList);
+  },
   methods: {
     backSlide() {
       const slides = document.querySelector('.slides');

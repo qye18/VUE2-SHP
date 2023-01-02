@@ -1,6 +1,6 @@
 <template>
   <div>
-    我是saerch组件
+    <TypeNav class="type-nav"></TypeNav>
   </div>
 </template>
 
@@ -10,6 +10,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .type-nav {
+    padding: 0 50px;
+  }
 </style>

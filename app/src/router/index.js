@@ -13,7 +13,8 @@ export default new VueRouter({
       component:Home,
       meta:{
         hasFooter:true,
-        showTopNav:true
+        showTopNav:true,
+        showLeftNav:true
       }
     },
     {
@@ -52,7 +53,8 @@ export default new VueRouter({
       component:Search,
       meta:{
         hasFooter:true,
-        showTopNav:true
+        showTopNav:true,
+        showLeftNav:false
       }
     },
     //重定向，跳转到redirect指定的路径
