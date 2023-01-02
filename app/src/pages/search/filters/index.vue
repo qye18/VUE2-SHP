@@ -111,7 +111,7 @@ export default {
 
 <style scoped>
   .filters {
-    width: 90%;
+    width: 1155px;
     margin: 10px auto;
   }
 
