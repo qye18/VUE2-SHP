@@ -1,172 +1,109 @@
 <template>
   <div class="filters">
-    <div class="filter-results">
-      <span><a href="">全部结果</a>/</span>
+    <div class="filter-category">
+      <h5 class="filter-title">品牌</h5>
+      <ul class="filter-content">
+        <li v-for="tm in trademarkList" :key="tm.Id">
+          <a href="">{{ tm.tmName }}</a>
+        </li>
+      </ul>
     </div>
-    <div class="filter-table">
-      <div class="filter-category">
-        <h5 class="filter-title">品牌</h5>
-        <ul class="filter-content">
-          <li><a href="">苹果</a></li>
-          <li><a href="">小米</a></li>
-          <li><a href="">苹果</a></li>
-          <li><a href="">小米</a></li>
-          <li><a href="">苹果</a></li>
-          <li><a href="">小米</a></li>
-          <li><a href="">苹果</a></li>
-          <li><a href="">小米</a></li>
-          <li><a href="">苹果</a></li>
-        </ul>
-      </div>
-      <div class="filter-category">
-        <h5 class="filter-title">运行内存</h5>
-        <ul class="filter-content">
-          <li><a href="">4G</a></li>
-          <li><a href="">8G</a></li>
-          <li><a href="">6G</a></li>
-          <li><a href="">12G</a></li>
-          <li><a href="">3G</a></li>
-        </ul>
-      </div>
-      <div class="filter-category">
-        <h5 class="filter-title">机身内存</h5>
-        <ul class="filter-content">
-          <li><a href="">32G</a></li>
-          <li><a href="">64G</a></li>
-          <li><a href="">128G</a></li>
-          <li><a href="">256G</a></li>
-          <li><a href="">512G</a></li>
-        </ul>
-      </div>
-      <div class="filter-category">
-        <h5 class="filter-title">手机一级</h5>
-        <ul class="filter-content">
-          <li><a href="">安卓手机</a></li>
-          <li><a href="">苹果手机</a></li>
-        </ul>
-      </div>
-      <div class="filter-category">
-        <h5 class="filter-title">运行内存</h5>
-        <ul class="filter-content">
-          <li><a href="">4G</a></li>
-          <li><a href="">8G</a></li>
-          <li><a href="">6G</a></li>
-          <li><a href="">12G</a></li>
-          <li><a href="">3G</a></li>
-        </ul>
-      </div>
-      <div class="filter-category">
-        <h5 class="filter-title">机身内存</h5>
-        <ul class="filter-content">
-          <li><a href="">32G</a></li>
-          <li><a href="">64G</a></li>
-          <li><a href="">128G</a></li>
-          <li><a href="">256G</a></li>
-          <li><a href="">512G</a></li>
-        </ul>
-      </div>
-      <div class="filter-category">
-        <h5 class="filter-title">手机一级</h5>
-        <ul class="filter-content">
-          <li><a href="">安卓手机</a></li>
-          <li><a href="">苹果手机</a></li>
-        </ul>
-      </div>
-      <div class="filter-category">
-        <h5 class="filter-title">运行内存</h5>
-        <ul class="filter-content">
-          <li><a href="">4G</a></li>
-          <li><a href="">8G</a></li>
-          <li><a href="">6G</a></li>
-          <li><a href="">12G</a></li>
-          <li><a href="">3G</a></li>
-        </ul>
-      </div>
-      <div class="filter-category">
-        <h5 class="filter-title">机身内存</h5>
-        <ul class="filter-content">
-          <li><a href="">32G</a></li>
-          <li><a href="">64G</a></li>
-          <li><a href="">128G</a></li>
-          <li><a href="">256G</a></li>
-          <li><a href="">512G</a></li>
-        </ul>
-      </div>
-      <div class="filter-category">
-        <h5 class="filter-title">手机一级</h5>
-        <ul class="filter-content">
-          <li><a href="">安卓手机</a></li>
-          <li><a href="">苹果手机</a></li>
-        </ul>
-      </div>
+    <div
+      class="filter-category"
+      v-for="attribute in attrsList"
+      :key="attribute.attrId"
+    >
+      <h5 class="filter-title">{{ attribute.attrName }}</h5>
+      <ul class="filter-content">
+        <li v-for="(val, index) in attribute.attrValueList" :key="index">
+          <a href="">{{ val }}</a>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  name:'Filters'
-}
+  name: "Filters",
+  computed: {
+    ...mapGetters(["attrsList", "trademarkList"]),
+  },
+};
 </script>
 
 <style scoped>
-  .filters {
-    width: 1155px;
-    margin: 10px auto;
-  }
+.filters {
+  width: 1155px;
+  margin: 10px auto;
+}
 
-  .filters .filter-results span {
-    font-size: 12px; 
-  }
-  .filters .filter-results span a {
-    padding-right: 5px;
-  }
-  .filter-table {
-    margin: 10px 0;
-    /* border: 1px solid rgb(230,230,230); */
-  }
-  .filter-table .filter-category, .filter-content {
-    display: flex;
-  }
+.filters .bread {
+  display: flex;
+  font-size: 12px;
+}
 
-  .filter-table .filter-category {
-    /* border: 1px solid rgb(230,230,230); */
-    height: 45px;
-  }
+.filters .bread span {
+  font-size: 12px;
+  margin-right: 10px;
+}
 
-  .filter-table .filter-category:first-child {
-    height: 100px;
-  }
+.bread .sui-tag {
+  display: flex;
+}
 
-  .filter-table .filter-category .filter-title {
-    width: 150px;
-    border: 1px solid rgb(230,230,230);
-    padding-right: 10px;
-    font-weight: 500;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    background-color: rgb(240,240,240);
-  }
+.bread .sui-tag li {
+  padding: 0 5px;
+  margin: 0 2px;
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(230, 230, 230);
+}
+.filters .bread span a {
+  padding-right: 5px;
+}
 
-  .filter-table .filter-content {
-    border: 1px solid rgb(230,230,230);
-    width: 100%;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .filter-table .filter-content li, 
-  .filter-category:first-child .filter-content{
-    padding-left: 30px;
-  }
+.filter-category,
+.filter-content {
+  display: flex;
+}
 
-  .filter-category:first-child .filter-content li {
-    border: 1px solid rgb(230,230,230);
-    padding: 15px 25px;
-    font-weight: 600;
-  }
+.filter-category {
+  /* border: 1px solid rgb(230,230,230); */
+  height: 45px;
+}
 
+.filter-category:first-child {
+  height: 100px;
+}
 
+.filter-category .filter-title {
+  width: 150px;
+  border: 1px solid rgb(230, 230, 230);
+  padding-right: 10px;
+  font-weight: 500;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  background-color: rgb(240, 240, 240);
+}
+
+.filter-content {
+  border: 1px solid rgb(230, 230, 230);
+  width: 100%;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
+
+.filter-content li,
+.filter-category:first-child .filter-content {
+  padding-left: 30px;
+}
+
+.filter-category:first-child .filter-content li {
+  border: 1px solid rgb(230, 230, 230);
+  padding: 15px 25px;
+  font-weight: 600;
+}
 </style>
