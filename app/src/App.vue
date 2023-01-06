@@ -22,6 +22,7 @@ export default {
     // console.log(this.$router);
     // console.log(this.$store);
     this.$store.dispatch("categoryList");
+    // console.log(this);
   }
 }
 </script>

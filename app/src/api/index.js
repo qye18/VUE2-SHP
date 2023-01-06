@@ -16,8 +16,17 @@ export const reqBannerList = () => {
   return mockRequests.get('/banner')
 }
 
-
 // unit接口，home最下面的
 export const reqUnitList = () => {
   return mockRequests.get('/unit')
+}
+
+// search接口
+export const reqSearchInfo = (params) => {
+  return requests({
+    url:'/list',
+    method:'post',
+    data:params
+    
+  })
 }

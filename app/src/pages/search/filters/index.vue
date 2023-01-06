@@ -3,8 +3,9 @@
     <div class="filter-category">
       <h5 class="filter-title">品牌</h5>
       <ul class="filter-content">
-        <li v-for="tm in trademarkList" :key="tm.Id">
-          <a href="">{{ tm.tmName }}</a>
+        <li v-for="tm in trademarkList" :key="tm.tmId">
+          <!-- <a @click="getTrademarkValue(tm.tmId,tm.tmName)">{{ tm.tmName }}</a> -->
+          <a @click="$emit('getTrademarkValue',tm.tmId,tm.tmName )">{{ tm.tmName }}</a>
         </li>
       </ul>
     </div>
@@ -15,8 +16,8 @@
     >
       <h5 class="filter-title">{{ attribute.attrName }}</h5>
       <ul class="filter-content">
-        <li v-for="(val, index) in attribute.attrValueList" :key="index">
-          <a href="">{{ val }}</a>
+        <li v-for="(attrVal, index) in attribute.attrValueList" :key="index">
+          <a @click="$emit('getAttrAndAttrValue',attribute.attrId,attrVal,attribute.attrName)">{{ attrVal }}</a>
         </li>
       </ul>
     </div>
@@ -30,6 +31,14 @@ export default {
   computed: {
     ...mapGetters(["attrsList", "trademarkList"]),
   },
+  methods: {
+    getTrademarkValue(id,val) {
+      console.log(`${id}:${val}`);
+    }
+  },
+  mounted(){
+    // console.log(this);
+  }
 };
 </script>
 

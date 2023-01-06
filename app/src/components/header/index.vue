@@ -27,7 +27,7 @@ export default {
         params:{
           result:searchResult
         }
-      })
+      },{},{})
       this.searchResult = '';
     },
   }

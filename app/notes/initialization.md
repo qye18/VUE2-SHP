@@ -68,3 +68,26 @@
     优化：
       把请求放到App.vue组件，因为这个组件只有每次打开网页时调用一次，
       在search和home组件来回跳转的时候不会被销毁再请求。
+
+# 2022/12/31, 2023/01/01，2023/01/02
+  home全动态数据，search静态组件。
+  轮播图：swiper/element UI插件 
+    - 有一些问题，安装插件有high vulnerable，
+    fix产生更多vulnerables。没有完成，保留手写轮播图（很多需要改进）
+
+# 2023/01/03 - 2023/01/05
+    search动态数组，用getters获取searchList里的数据方便mapGetters。
+    在请求前获取query参数（home点击某个分类后得到的），
+    请求是在mounted发送的，获取参数需要在mounted前，所以用beforeMounted或beforeCreate？钩子。
+      $route.query
+    
+    动态加载search页面数据:
+      分类信息，
+      商品信息
+    
+    实现点击分类，给出相对应的商品（点击苹果手机 => 获得仅为苹果的手机商品）
+      bread面包屑: vif/vshow显示筛选内容，点叉，更新请求params，重新发送请求
+      展示商品数据：更新请求params，发送请求
+      
+      全局事件总线（$bus），自定义事件（子传父,filter传给search）
+        

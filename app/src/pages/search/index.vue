@@ -4,11 +4,19 @@
     <div class="bread">
       <h4>全部结果<span>/</span></h4>
       <ul class="sui-tag">
-        <li v-show="searchParams.categoryName">{{ searchParams.categoryName }}<i @click="removeCategoryName(searchParams)">×</i></li>
-        <!-- <li>手机<i>×</i></li> -->
+        <li v-show="searchParams.categoryName">
+          {{ searchParams.categoryName
+          }}<i @click="removeCategoryName(searchParams)">×</i>
+        </li>
+        <li v-show="searchParams.trademark">{{searchParams.trademark.split(':')[1]}}
+          <i @click="removeTrademark">×</i></li>
+        <li v-for="(prop, index) in searchParams.props" :key="index">
+          {{ prop.split(":")[1] }}<i @click="removeAttrName(index)">×</i>
+        </li>
       </ul>
     </div>
-    <Filters></Filters>
+    <Filters @getAttrAndAttrValue="getAttrAndAttrValue"
+    @getTrademarkValue="getTrademarkValue"></Filters>
     <div class="sort">
       <li><a href="">综合↑</a></li>
       <li><a href="">价格</a></li>
@@ -65,6 +73,25 @@ export default {
     this.getSearchListInfo();
   },
   methods: {
+    removeTrademark(){
+      this.searchParams.trademark = '';
+      console.log(this.searchParams);
+      this.getSearchListInfo();
+    },
+    getTrademarkValue(tmId, tmName) {
+      // let trademark = `${tmId}:${tmName}`;
+      this.searchParams.trademark = `${tmId}:${tmName}`;
+      this.getSearchListInfo();
+    },
+    getAttrAndAttrValue(attrId, attrVal, attrName) {
+      // console.log(v1,v2,v3);
+      let props = `${attrId}:${attrVal}:${attrName}`;
+      if (this.searchParams.props.indexOf(props) == -1) {
+        this.searchParams.props.push(props);
+      }
+      this.getSearchListInfo();
+      this.$router.push({ name: "search", params: this.searchParams });
+    },
     getSearchListInfo() {
       this.$store.dispatch("searchList", this.searchParams);
     },
@@ -74,8 +101,14 @@ export default {
       this.searchParams.category2Id = undefined;
       this.searchParams.category3Id = undefined;
       // console.log('#########here');
-      console.log(this.searchParams);
+      // console.log(this.searchParams);
       this.getSearchListInfo();
+      this.$router.push({ name: "search" });
+    },
+    removeAttrName(attrIndex) {
+      this.searchParams.props.splice(attrIndex,1);
+      this.getSearchListInfo();
+      // this.$router.push({name:'search', params: this.searchParams})
     }
   },
   computed: {
@@ -88,10 +121,8 @@ export default {
       this.searchParams.category3Id = undefined;
       this.searchParams.categoryName = undefined;
 
-      Object.assign(this.searchParams,this.$route.params);
+      Object.assign(this.searchParams, this.$route.params);
       this.getSearchListInfo();
-      // 去掉地址上的categoryName等，还没完成 ####################3
-      // this.$router.push({name:'search'});
     },
   },
 };
