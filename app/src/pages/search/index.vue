@@ -41,18 +41,15 @@
         :key="g.id"
         :good="g"
       ></ShoppingItem>
-      <!-- <ShoppingItem></ShoppingItem> -->
-      <!-- <ShoppingItem></ShoppingItem> -->
-      <!-- <ShoppingItem></ShoppingItem> -->
-      <!-- <ShoppingItem></ShoppingItem> -->
     </div>
-    <Pagination></Pagination>
+    <Pagination :pageNo="searchParams.pageNo" :pageSize="searchParams.pageSize" :total="total" :continues="5"
+    @getPageNo="getPageNo"></Pagination>
     <Hot></Hot>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import Filters from "./filters";
 import ShoppingItem from "./shoppingItem";
 import Pagination from "./pagination";
@@ -138,9 +135,17 @@ export default {
       this.searchParams.order = order;
       this.getSearchListInfo();
     },
+    getPageNo(pageNo){
+      // console.log(pageNo);
+      this.searchParams.pageNo = pageNo;
+      this.getSearchListInfo();
+    }
   },
   computed: {
     ...mapGetters(["goodsList"]),
+    ...mapState({
+      total: state => state.search.searchList.total,
+    }),
     isOrderOne() {
       return this.searchParams.order.indexOf("1") != -1;
     },

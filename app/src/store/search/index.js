@@ -6,7 +6,7 @@ const state = {
 const actions = {
   async searchList({commit},params={}) {
     const result = await reqSearchInfo(params);
-    // console.log(result.data);
+    console.log(result.data);
     commit('SEARCHLIST', result.data);
   }
 };
