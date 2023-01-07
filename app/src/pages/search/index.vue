@@ -8,20 +8,31 @@
           {{ searchParams.categoryName
           }}<i @click="removeCategoryName(searchParams)">×</i>
         </li>
-        <li v-show="searchParams.trademark">{{searchParams.trademark.split(':')[1]}}
-          <i @click="removeTrademark">×</i></li>
+        <li v-show="searchParams.trademark">
+          {{ searchParams.trademark.split(":")[1] }}
+          <i @click="removeTrademark">×</i>
+        </li>
         <li v-for="(prop, index) in searchParams.props" :key="index">
           {{ prop.split(":")[1] }}<i @click="removeAttrName(index)">×</i>
         </li>
       </ul>
     </div>
-    <Filters @getAttrAndAttrValue="getAttrAndAttrValue"
-    @getTrademarkValue="getTrademarkValue"></Filters>
+    <Filters
+      @getAttrAndAttrValue="getAttrAndAttrValue"
+      @getTrademarkValue="getTrademarkValue"
+    ></Filters>
     <div class="sort">
-      <li><a href="">综合↑</a></li>
-      <li><a href="">价格</a></li>
-      <li><a href="">新品</a></li>
-      <li><a href="">评价</a></li>
+      <!-- span里需要加箭头，暂时没法注册iconfont，先跳过。 
+        判断1：当前a被选择，才会显示箭头
+        判断2：当前order是asc/desc => 箭头朝上/朝下 -->
+      <li>
+        <a :class="{ active: isOrderOne }" @click="changeOrder(1)">综合<span></span></a>
+      </li>
+      <li>
+        <a :class="{ active: isOrderTwo }" @click="changeOrder(2)">价格<span></span></a>
+      </li>
+      <li><a>新品</a></li>
+      <li><a>评价</a></li>
     </div>
     <div class="shop">
       <ShoppingItem
@@ -66,16 +77,16 @@ export default {
   },
   components: { Filters, ShoppingItem, Pagination, Hot },
   beforeMount() {
-    // console.log(this.$route);
     Object.assign(this.searchParams, this.$route.query);
   },
   mounted() {
     this.getSearchListInfo();
+    // console.log(this.$store.state.search);
   },
   methods: {
-    removeTrademark(){
-      this.searchParams.trademark = '';
-      console.log(this.searchParams);
+    removeTrademark() {
+      this.searchParams.trademark = "";
+      // console.log(this.searchParams);
       this.getSearchListInfo();
     },
     getTrademarkValue(tmId, tmName) {
@@ -106,13 +117,36 @@ export default {
       this.$router.push({ name: "search" });
     },
     removeAttrName(attrIndex) {
-      this.searchParams.props.splice(attrIndex,1);
+      this.searchParams.props.splice(attrIndex, 1);
       this.getSearchListInfo();
       // this.$router.push({name:'search', params: this.searchParams})
-    }
+    },
+    changeOrder(currentOrder) {
+      let order;
+      // 点的不是当前高亮，换排序方式
+      if (this.searchParams.order.indexOf(currentOrder) == -1) {
+        order = `${currentOrder}:desc`;
+      }
+      // 点的是当前的自己，flip顺序
+      else {
+        if (this.searchParams.order.indexOf("desc")) {
+          order = `${this.searchParams.order.split(":")[0]}:asc`;
+        } else {
+          order = `${this.searchParams.order.split(":")[0]}:desc`;
+        }
+      }
+      this.searchParams.order = order;
+      this.getSearchListInfo();
+    },
   },
   computed: {
     ...mapGetters(["goodsList"]),
+    isOrderOne() {
+      return this.searchParams.order.indexOf("1") != -1;
+    },
+    isOrderTwo() {
+      return this.searchParams.order.indexOf("2") != -1;
+    },
   },
   watch: {
     $route() {
@@ -174,26 +208,22 @@ export default {
   margin-bottom: 20px;
   display: flex;
 }
-.sort li {
+
+.sort li a {
+  padding: 0 20px;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 0 20px;
 }
-
-.sort li:first-child {
+.sort .active {
   background-color: rgb(227, 1, 1);
+  color: white;
 }
 
 .sort li a {
   color: rgb(100, 100, 100);
-}
-.sort li a:hover {
-  color: black;
-}
-
-.sort li:first-child a {
-  color: white;
+  cursor: pointer;
 }
 
 .shop {
