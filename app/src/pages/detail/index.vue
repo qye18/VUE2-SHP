@@ -9,9 +9,14 @@
     </div>
     <div class="item-detail">
       <div class="left">
-        <img src="./b2.png" alt="" />
+        <img ref="placeholder" src="./b2.png" alt="" />
         <div class="carousel">
-          <li><img src="" alt="" /></li>
+          <button class="prev">&lt;</button>
+          <li><img src="./b3.png" alt="" @mouseover="replaceImage"/></li>
+          <li><img src="./b1.png" alt="" @mouseover="replaceImage"/></li>
+          <li><img src="./b3.png" alt="" @mouseover="replaceImage"/></li>
+          <li><img src="./b2.png" alt="" @mouseover="replaceImage"/></li>
+          <button class="next">&gt;</button>
         </div>
       </div>
       <div class="right">
@@ -229,6 +234,14 @@ import Slides from "../home/unit/slides";
 export default {
   name: "Detail",
   components: { Slides },
+  methods:{
+    replaceImage({target}){
+      
+      console.log(target.src);
+      console.log(this.$refs);
+      this.$refs.placeholder.src = target.src
+    }
+  }
 };
 </script>
 
@@ -283,8 +296,51 @@ button {
 .item-detail .left .carousel {
   width: 100%;
   height: 70px;
-  border: 1px solid rgb(220, 220, 220);
+  display: flex;
+  align-items: center;
+  position: relative;
 }
+
+.item-detail .left .carousel li {
+  height: 100%;
+  margin-left: 20px;
+  padding: 2px 0 5px;
+  border: 1px solid rgb(220, 220, 220);
+  padding: 2px;
+}
+
+.item-detail .left .carousel li:hover {
+  border: 1px solid orange;
+  box-shadow: 0 0 0 2px orange inset;
+}
+
+.item-detail .left .carousel li img {
+  width: 65px;
+  height: 60px;
+}
+.item-detail .left .carousel .prev ,
+  .item-detail .left .carousel .next {
+    position: absolute;
+    border:1px solid rgb(220, 220, 220);
+    background-color: rgb(240, 240, 240);
+    width: 12px;
+    height: 100%;
+    color: rgb(150, 150, 150);
+  }
+
+  .item-detail .left .carousel .prev:hover ,
+  .item-detail .left .carousel .next:hover {
+    background-color: rgb(220, 220, 220);
+    color: white;
+  }
+.item-detail .left .carousel .prev {
+  left: 0;
+}
+.item-detail .left .carousel .next {
+  right: 0;
+}
+
+
 
 .item-detail .right {
   width: 755px;

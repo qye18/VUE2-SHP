@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     goSearch({ target }) {
-      console.log(target.dataset);
+      // console.log(target.dataset);
       let { categoryname, category1id, category2id, category3id } =
         target.dataset;
       if (categoryname) {
