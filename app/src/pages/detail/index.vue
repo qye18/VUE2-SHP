@@ -9,13 +9,13 @@
     </div>
     <div class="item-detail">
       <div class="left">
-        <img ref="placeholder" src="./b2.png" alt="" />
+        <img ref="placeholder" src="./images/b2.png" alt="" />
         <div class="carousel">
           <button class="prev">&lt;</button>
-          <li><img src="./b3.png" alt="" @mouseover="replaceImage"/></li>
-          <li><img src="./b1.png" alt="" @mouseover="replaceImage"/></li>
-          <li><img src="./b3.png" alt="" @mouseover="replaceImage"/></li>
-          <li><img src="./b2.png" alt="" @mouseover="replaceImage"/></li>
+          <li><img src="./images/b3.png" alt="" @mouseover="replaceImage" /></li>
+          <li><img src="./images/b1.png" alt="" @mouseover="replaceImage" /></li>
+          <li><img src="./images/b3.png" alt="" @mouseover="replaceImage" /></li>
+          <li><img src="./images/b2.png" alt="" @mouseover="replaceImage" /></li>
           <button class="next">&gt;</button>
         </div>
       </div>
@@ -64,9 +64,9 @@
           </li>
         </div>
         <div class="item-quantity">
-          <button class="minus">-</button>
-          <input type="text" />
-          <button class="plus">+</button>
+          <button class="minus" @click="modifyQuantity(-1)">-</button>
+          <input type="text" v-model="quantity" />
+          <button class="plus" @click="modifyQuantity(1)">+</button>
           <button class="add-to-cart">加入购物车</button>
         </div>
       </div>
@@ -93,21 +93,21 @@
           </ul>
           <ul class="related-item">
             <li>
-              <img src="./part01.png" alt="" />
+              <img src="./images/part01.png" alt="" />
               <p>Apple苹果iPhone 6s (A1699)</p>
               <h3>￥6088.00</h3>
               <button class="add-to-cart">加入购物车</button>
               <hr />
             </li>
             <li>
-              <img src="./part02.png" alt="" />
+              <img src="./images/part02.png" alt="" />
               <p>Apple苹果iPhone 6s (A1699)</p>
               <h3>￥6088.00</h3>
               <button class="add-to-cart">加入购物车</button>
               <hr />
             </li>
             <li>
-              <img src="./part03.png" alt="" />
+              <img src="./images/part03.png" alt="" />
               <p>Apple苹果iPhone 6s (A1699)</p>
               <h3>￥6088.00</h3>
               <button class="add-to-cart">加入购物车</button>
@@ -122,27 +122,27 @@
           <div>
             <ul>
               <li class="current-item">
-                <img src="./part01.png" alt="" />
+                <img src="./images/part01.png" alt="" />
                 <h3>￥5299</h3>
               </li>
               <span>+</span>
               <li>
-                <img src="./part01.png" alt="" />
+                <img src="./images/part01.png" alt="" />
                 <p>Feless费勒斯VR</p>
                 <label><input type="checkbox" /><span>39</span></label>
               </li>
               <li>
-                <img src="./part02.png" alt="" />
+                <img src="./images/part02.png" alt="" />
                 <p>Feless费勒斯VR</p>
                 <label><input type="checkbox" /><span>39</span></label>
               </li>
               <li>
-                <img src="./part03.png" alt="" />
+                <img src="./images/part03.png" alt="" />
                 <p>Feless费勒斯VR</p>
                 <label><input type="checkbox" /><span>39</span></label>
               </li>
               <li>
-                <img src="./part01.png" alt="" />
+                <img src="./images/part01.png" alt="" />
                 <p>Feless费勒斯VR</p>
                 <label><input type="checkbox" /><span>39</span></label>
               </li>
@@ -189,37 +189,37 @@
       <h4>猜你喜欢</h4>
       <ul>
         <li>
-          <img src="./itemlike01.png" alt="" />
+          <img src="./images/itemlike01.png" alt="" />
           <p>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</p>
           <h3>￥3699.00</h3>
           <span>已有6人评价</span>
         </li>
         <li>
-          <img src="./itemlike02.png" alt="" />
+          <img src="./images/itemlike02.png" alt="" />
           <p>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</p>
           <h3>￥3699.00</h3>
           <span>已有6人评价</span>
         </li>
         <li>
-          <img src="./itemlike03.png" alt="" />
+          <img src="./images/itemlike03.png" alt="" />
           <p>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</p>
           <h3>￥3699.00</h3>
           <span>已有6人评价</span>
         </li>
         <li>
-          <img src="./itemlike04.png" alt="" />
+          <img src="./images/itemlike04.png" alt="" />
           <p>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</p>
           <h3>￥3699.00</h3>
           <span>已有6人评价</span>
         </li>
         <li>
-          <img src="./itemlike05.png" alt="" />
+          <img src="./images/itemlike05.png" alt="" />
           <p>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</p>
           <h3>￥3699.00</h3>
           <span>已有6人评价</span>
         </li>
         <li>
-          <img src="./itemlike06.png" alt="" />
+          <img src="./images/itemlike06.png" alt="" />
           <p>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</p>
           <h3>￥3699.00</h3>
           <span>已有6人评价</span>
@@ -234,14 +234,24 @@ import Slides from "../home/unit/slides";
 export default {
   name: "Detail",
   components: { Slides },
-  methods:{
-    replaceImage({target}){
-      
-      console.log(target.src);
-      console.log(this.$refs);
-      this.$refs.placeholder.src = target.src
+  data() {
+    return {
+      quantity: 1,
+    };
+  },
+  methods: {
+    replaceImage({ target }) {
+      // console.log(target.src);
+      // console.log(this.$refs);
+      this.$refs.placeholder.src = target.src;
+    },
+    modifyQuantity(quantity) {
+      this.quantity += quantity;
+      if (this.quantity < 1) {
+        this.quantity = 1;
+      }
     }
-  }
+  },
 };
 </script>
 
@@ -318,29 +328,27 @@ button {
   width: 65px;
   height: 60px;
 }
-.item-detail .left .carousel .prev ,
-  .item-detail .left .carousel .next {
-    position: absolute;
-    border:1px solid rgb(220, 220, 220);
-    background-color: rgb(240, 240, 240);
-    width: 12px;
-    height: 100%;
-    color: rgb(150, 150, 150);
-  }
+.item-detail .left .carousel .prev,
+.item-detail .left .carousel .next {
+  position: absolute;
+  border: 1px solid rgb(220, 220, 220);
+  background-color: rgb(240, 240, 240);
+  width: 12px;
+  height: 100%;
+  color: rgb(150, 150, 150);
+}
 
-  .item-detail .left .carousel .prev:hover ,
-  .item-detail .left .carousel .next:hover {
-    background-color: rgb(220, 220, 220);
-    color: white;
-  }
+.item-detail .left .carousel .prev:hover,
+.item-detail .left .carousel .next:hover {
+  background-color: rgb(220, 220, 220);
+  color: white;
+}
 .item-detail .left .carousel .prev {
   left: 0;
 }
 .item-detail .left .carousel .next {
   right: 0;
 }
-
-
 
 .item-detail .right {
   width: 755px;
@@ -412,6 +420,7 @@ button {
 .item-detail .right .item-quantity input[type="text"] {
   width: 50px;
   outline: none;
+  text-align: center;
 }
 .item-detail .right .item-quantity input[type="text"],
 .item-detail .right .item-quantity .plus,

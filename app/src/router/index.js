@@ -65,7 +65,12 @@ export default new VueRouter({
       meta:{
         showTopNav:true,
         hasFooter:true,
-      }
+      },
+      /* children: [
+        {
+          name:''
+        }
+      ] */
 
     },
     //重定向，跳转到redirect指定的路径
