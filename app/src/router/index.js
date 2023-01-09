@@ -3,6 +3,7 @@ import Home from '@/pages/home'
 import Login from '@/pages/login'
 import Register from '@/pages/register'
 import Search from '@/pages/search'
+import Detail from '@/pages/detail'
 import AccoutLogin from '@/pages/login/accountLogin'
 import QrcodeLogin from '@/pages/login/qrcodeLogin'
 export default new VueRouter({
@@ -56,6 +57,16 @@ export default new VueRouter({
         showTopNav:true,
         showLeftNav:false
       }
+    },
+    {
+      name:'detial',
+      path:'/detail',
+      component:Detail,
+      meta:{
+        showTopNav:true,
+        hasFooter:true,
+      }
+
     },
     //重定向，跳转到redirect指定的路径
     {

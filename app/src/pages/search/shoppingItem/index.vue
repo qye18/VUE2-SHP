@@ -1,7 +1,9 @@
 <template>
   <div class="shopping-item">
     <div class="item-image">
+      <router-link to="/detail">
       <img :src="good.defaultImg" alt="" />
+      </router-link>
     </div>
     <div class="item-detail">
       <h4>{{ good.price }}</h4>

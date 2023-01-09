@@ -111,7 +111,8 @@ export default {
   background-color: rgb(220, 220, 220);
 }
 .pagination .active {
-  background-color: skyblue;
+  background-color: rgb(220, 220, 220);
+  
 }
 
 .pagination button:first-child,

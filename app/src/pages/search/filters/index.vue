@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     getTrademarkValue(id,val) {
-      console.log(`${id}:${val}`);
+      // console.log(`${id}:${val}`);
     }
   },
   mounted(){
@@ -108,6 +108,10 @@ export default {
 .filter-content li,
 .filter-category:first-child .filter-content {
   padding-left: 30px;
+}
+
+.filter-content a {
+  cursor: pointer;
 }
 
 .filter-category:first-child .filter-content li {
