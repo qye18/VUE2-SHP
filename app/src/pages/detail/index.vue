@@ -77,44 +77,10 @@
     <div class="more">
       <div class="left">
         <div class="title">
-          <li><a>相关分类</a></li>
-          <li><a>推荐品牌</a></li>
+          <router-link active-class="active-left" :to="{name:'related'}">相关分类</router-link>
+          <router-link active-class="active-left" :to="{name:'recommend'}">推荐品牌</router-link>
         </div>
-        <div class="content">
-          <ul class="item-list">
-            <li>手机</li>
-            <li>手机壳</li>
-            <li>内存卡</li>
-            <li>iPhone配件</li>
-            <li>贴膜</li>
-            <li>手机耳机</li>
-            <li>移动电源</li>
-            <li>平板电脑</li>
-          </ul>
-          <ul class="related-item">
-            <li>
-              <img src="./images/part01.png" alt="" />
-              <p>Apple苹果iPhone 6s (A1699)</p>
-              <h3>￥6088.00</h3>
-              <button class="add-to-cart">加入购物车</button>
-              <hr />
-            </li>
-            <li>
-              <img src="./images/part02.png" alt="" />
-              <p>Apple苹果iPhone 6s (A1699)</p>
-              <h3>￥6088.00</h3>
-              <button class="add-to-cart">加入购物车</button>
-              <hr />
-            </li>
-            <li>
-              <img src="./images/part03.png" alt="" />
-              <p>Apple苹果iPhone 6s (A1699)</p>
-              <h3>￥6088.00</h3>
-              <button class="add-to-cart">加入购物车</button>
-              <hr />
-            </li>
-          </ul>
-        </div>
+        <router-view></router-view>
       </div>
       <div class="right">
         <div class="matches">
@@ -250,8 +216,17 @@ export default {
       if (this.quantity < 1) {
         this.quantity = 1;
       }
+    },
+    getItemDetail() {
+      this.$store.dispatch('getItemDetail',this.$route.params.id);
     }
   },
+  beforeMount() {
+    
+  },
+  mounted(){
+    this.getItemDetail();
+  }
 };
 </script>
 
@@ -443,6 +418,7 @@ button {
 .more {
   margin-top: 15px;
   display: flex;
+  margin-bottom: 20px;
 }
 .more .left {
   width: 200px;
@@ -450,67 +426,22 @@ button {
   font-size: 12px;
 }
 
-.more .left .title {
-  display: flex;
-  justify-content: space-around;
-}
-
-.more .left .title li {
-  width: 100%;
+.more .left .title a {
+  width: 100px;
   padding: 10px 0;
   text-align: center;
   border-bottom: 1px solid rgb(220, 220, 220);
-}
-
-.more .left .title li:first-child {
-  border-right: 1px solid rgb(220, 220, 220);
-}
-.more .left .title a {
-  width: 50%;
   font-size: 14px;
 }
 
-.more .left .content {
-  padding: 0 10px;
-}
-.more .left .content .item-list {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
+.more .left .title a:first-child {
+  border-right: 1px solid rgb(220, 220, 220);
 }
 
-.more .left .content .item-list li {
-  padding-top: 10px;
-  width: 50%;
-  border-bottom: 1px solid rgb(240, 240, 240);
-}
 
-.more .left .content .related-item {
-  padding: 10px;
-}
-
-.more .left .content .related-item li {
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid rgb(220, 220, 220);
-}
-
-.more .left .content .related-item h3 {
-  color: rgb(227, 1, 1);
-  font-size: 18px;
-}
-
-.more .left .content .related-item .add-to-cart {
-  padding: 3px 10px;
-  margin-left: 40px;
-  margin-top: 5px;
-  border: 1px solid rgb(150, 150, 150);
-  color: rgb(150, 150, 150);
-  font-size: 12px;
-}
-
-.more {
-  margin-bottom: 20px;
+.more .left .title .active-left {
+  border-bottom: 1px solid white;
+  border-top: 2px solid rgb(227, 1, 1);
 }
 
 .more .right {
@@ -644,4 +575,5 @@ button {
   color: rgb(227, 1, 1);
   font-size: 16px;
 }
+
 </style>

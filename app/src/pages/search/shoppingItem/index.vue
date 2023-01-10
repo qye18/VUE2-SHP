@@ -1,7 +1,12 @@
 <template>
   <div class="shopping-item">
     <div class="item-image">
-      <router-link to="/detail">
+      <router-link :to="{
+        name:'detail',
+        params:{
+          id:good.id
+        }
+      }">
       <img :src="good.defaultImg" alt="" />
       </router-link>
     </div>

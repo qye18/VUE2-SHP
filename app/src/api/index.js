@@ -27,6 +27,13 @@ export const reqSearchInfo = (params) => {
     url:'/list',
     method:'post',
     data:params
-    
+  })
+}
+
+// 产品详情接口
+export const reqItemDetail = (skuid) => {
+  return requests({
+    url:`/item/${skuid}`,
+    method:'get',
   })
 }
