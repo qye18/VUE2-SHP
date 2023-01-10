@@ -2,32 +2,33 @@
   <div>
     <TypeNav class="type-nav"></TypeNav>
     <div class="item-category">
-      <li><a href="">手机</a><span>/</span></li>
-      <li><a href="">手机通讯</a><span>/</span></li>
-      <li><a href="">手机</a><span>/</span></li>
-      <li>Apple iPhone 12 (A2404) 64GB 蓝色 支持移动联通电信5G 双卡双待手机</li>
+      <li><a href="">{{categoryView.category1Name}}</a><span>/</span></li>
+      <li><a href="">{{categoryView.category2Name}}</a><span>/</span></li>
+      <li><a href="">{{categoryView.category3Name}}</a><span>/</span></li>
+      <li>{{ skuInfo.skuName }}</li>
     </div>
     <div class="item-detail">
       <div class="left">
-        <img ref="placeholder" src="./images/b2.png" alt="" />
+        <img ref="placeholder" :src="skuInfo.skuDefaultImg" alt="" />
         <div class="carousel">
-          <button class="prev">&lt;</button>
-          <li><img src="./images/b3.png" alt="" @mouseover="replaceImage" /></li>
-          <li><img src="./images/b1.png" alt="" @mouseover="replaceImage" /></li>
-          <li><img src="./images/b3.png" alt="" @mouseover="replaceImage" /></li>
-          <li><img src="./images/b2.png" alt="" @mouseover="replaceImage" /></li>
-          <button class="next">&gt;</button>
+          <button class="prev" @click="slideCarousel(-390)">&lt;</button>
+          <ul ref="thumbnailList">
+            <li v-for="image in skuInfo.skuImageList" :key="image.id"><img :src="image.imgUrl" alt="" @mouseover="replaceImage" /></li>
+          </ul>
+          <!-- <li><img src="./images/b3.png" alt="" @mouseover="replaceImage" /></li> -->
+          <!-- <li><img src="./images/b2.png" alt="" @mouseover="replaceImage" /></li> -->
+          <button class="next" @click="slideCarousel(390)">&gt;</button>
         </div>
       </div>
       <div class="right">
         <h5>
-          Apple iPhone 12 (A2404) 64GB 蓝色 支持移动联通电信5G 双卡双待手机
+          {{skuInfo.skuName}}
         </h5>
         <p>推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返</p>
         <div class="item-paras">
           <li>
             <h5>价格</h5>
-            <p>￥8197</p>
+            <p>￥{{ skuInfo.price }}</p>
             <span>降价通知</span>
             <span>累计评价 11111</span>
           </li>
@@ -43,23 +44,15 @@
           </li>
           <li>
             <h5>重量</h5>
-            <p>1.00</p>
+            <p>{{ skuInfo.weight }}</p>
           </li>
           <hr />
-          <li class="selections">
-            <h5>颜色</h5>
+          <li class="selections" v-for="saleAttr in spuSaleAttrList" :key="saleAttr.saleAttrId">
+            <h5>{{saleAttr.saleAttrName}}</h5>
             <ul>
-              <button>黑色</button>
-              <button>红色</button>
-              <button>蓝色</button>
-              <button>白色</button>
-            </ul>
-          </li>
-          <li class="selections">
-            <h5>版本</h5>
-            <ul>
-              <button>64G</button>
-              <button>128G</button>
+              <button v-for="attrValue in saleAttr.spuSaleAttrValueList" :key="attrValue.baseSaleAttrId"
+              @click="selectSaleAttr(skuInfo.id)">{{attrValue.saleAttrValueName}}</button>
+              <!-- @click 参数不对，要改 -->
             </ul>
           </li>
         </div>
@@ -89,7 +82,7 @@
             <ul>
               <li class="current-item">
                 <img src="./images/part01.png" alt="" />
-                <h3>￥5299</h3>
+                <h3>￥{{skuInfo.price}}</h3>
               </li>
               <span>+</span>
               <li>
@@ -131,7 +124,7 @@
           </ul>
           <div class="content">
             <ul class="item-basic">
-              <li>分辨率：1920*1080(FHD)</li>
+              <li v-for="attr in skuInfo.skuAttrValueList" :key="attr.attrId">{{attr.attrName}}:{{ attr.valueName }}</li>
               <li>后置摄像头：1200万像素</li>
               <li>前置摄像头：500万像素</li>
               <li>核 数：其他</li>
@@ -196,6 +189,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Slides from "../home/unit/slides";
 export default {
   name: "Detail",
@@ -205,11 +199,17 @@ export default {
       quantity: 1,
     };
   },
+  computed:{
+    ...mapGetters(['categoryView','price','skuInfo','spuSaleAttrList','valueSkuJson']),
+  },
   methods: {
     replaceImage({ target }) {
       // console.log(target.src);
       // console.log(this.$refs);
       this.$refs.placeholder.src = target.src;
+    },
+    slideCarousel(pixel){
+      let left = 0;
     },
     modifyQuantity(quantity) {
       this.quantity += quantity;
@@ -219,7 +219,8 @@ export default {
     },
     getItemDetail() {
       this.$store.dispatch('getItemDetail',this.$route.params.id);
-    }
+    },
+
   },
   beforeMount() {
     
@@ -283,6 +284,12 @@ button {
   height: 70px;
   display: flex;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.item-detail .left .carousel ul {
+  display: flex;
   position: relative;
 }
 
