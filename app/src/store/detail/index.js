@@ -1,4 +1,4 @@
-import {reqItemDetail} from '@/api'
+import {reqItemDetail, reqAddCart} from '@/api'
 
 const state = {
   sku:{},
@@ -11,12 +11,20 @@ const actions = {
     if (result.code === 200) {
       commit('GETITEMDETAIL',result.data);
     }
+  },
+  async addToCart({commit},{id,quantity}) {
+    let result = await reqAddCart(id, quantity);
+    if (result.code === 200) {
+      return 'ok'
+    } else {
+      return Promise.reject(new Error('加入购物车失败'));
+    }
   }
 };
 const mutations = {
   GETITEMDETAIL(state,sku){
     state.sku = sku;
-  }
+  },
 };
 const getters = {
   categoryView(state){

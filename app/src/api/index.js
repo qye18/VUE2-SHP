@@ -6,8 +6,8 @@ import mockRequests from './mockRequest'
 // 三级联动接口
 export const reqCategoryList = () => {
   return requests({
-    url:'./product/getBaseCategoryList',
-    method:'get'
+    url: './product/getBaseCategoryList',
+    method: 'get'
   })
 }
 
@@ -24,16 +24,24 @@ export const reqUnitList = () => {
 // search接口
 export const reqSearchInfo = (params) => {
   return requests({
-    url:'/list',
-    method:'post',
-    data:params
+    url: '/list',
+    method: 'post',
+    data: params
   })
 }
 
 // 产品详情接口
 export const reqItemDetail = (skuid) => {
   return requests({
-    url:`/item/${skuid}`,
-    method:'get',
+    url: `/item/${skuid}`,
+    method: 'get',
+  })
+}
+
+// 添加产品到购物车
+export const reqAddCart = (skuId, skuNum) => {
+  return requests({
+    url: `/cart/addToCart/${skuId}/${skuNum}`,
+    method: 'post'
   })
 }

@@ -87,10 +87,10 @@
           </li>
         </div>
         <div class="item-quantity">
-          <button class="minus" @click="modifyQuantity(-1)">-</button>
-          <input type="text" v-model="quantity" />
-          <button class="plus" @click="modifyQuantity(1)">+</button>
-          <button class="add-to-cart">加入购物车</button>
+          <button class="minus" @click="quantity>1?quantity--:quantity = 1">-</button>
+          <input type="text" v-model="quantity" @change="changeQuantity" />
+          <button class="plus" @click="quantity++">+</button>
+          <button class="add-to-cart" @click="addToCart">加入购物车</button>
         </div>
       </div>
     </div>
@@ -253,12 +253,6 @@ export default {
     slideCarousel(pixel) {
       let left = 0;
     },
-    modifyQuantity(quantity) {
-      this.quantity += quantity;
-      if (this.quantity < 1) {
-        this.quantity = 1;
-      }
-    },
     getItemDetail() {
       this.$store.dispatch("getItemDetail", this.$route.params.id);
     },
@@ -271,6 +265,7 @@ export default {
     },
     zoomIn(event) {
       this.$refs.amplifier.style.display = "block";
+      this.$refs.mask.style.display = "block";
       const mask = this.$refs.mask;
       const bigImage = this.$refs.bigImage;
       let top = event.offsetY - 0.5 * mask.offsetWidth;
@@ -288,7 +283,35 @@ export default {
     zoomOut() {
       // console.log('out');
       this.$refs.amplifier.style.display = "none";
+      this.$refs.mask.style.display = "none";
     },
+    changeQuantity(event){
+      // 如果是 文本字符串*1= NaN, 数字*1 = 数字
+      let number = event.target.value * 1;
+      if (isNaN(number) || number < 1 ) {
+        console.log('illegal');
+        this.quantity = 1;
+      } else {
+        this.quantity = parseInt(number);
+      }
+    },
+    async addToCart() {
+      // this.$store.dispatch('addToCart',{ id: this.$route.params.id,quantity:this.quantity})
+      // .then(
+      //   response => {
+      //     console.log('成功',response);
+      //   },
+      //   error => {
+      //     console.log('失败');
+      //   }
+      // )
+        try {
+          await this.$store.dispatch('addToCart',{ id: this.$route.params.id,quantity:this.quantity});
+          // 成功加入购物车，路由跳转
+        } catch (error) {
+          alert(error)
+        }
+    }
   },
   beforeMount() {},
   mounted() {
