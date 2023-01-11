@@ -7,7 +7,7 @@ const actions = {
   async getItemDetail({commit},skuid){
     let result = await reqItemDetail(skuid);
     // console.log('##########');
-    console.log(result.data);
+    // console.log(result.data);
     if (result.code === 200) {
       commit('GETITEMDETAIL',result.data);
     }
@@ -20,19 +20,19 @@ const mutations = {
 };
 const getters = {
   categoryView(state){
-    return state.sku.categoryView;
+    return state.sku.categoryView || {};
   },
   price(state) {
-    return state.sku.price;
+    return state.sku.price || {};
   },
   skuInfo(state) {
-    return state.sku.skuInfo;
+    return state.sku.skuInfo || {};
   },
   spuSaleAttrList(state) {
-    return state.sku.spuSaleAttrList;
+    return state.sku.spuSaleAttrList || [];
   },
   valueSkuJson(state) {
-    return state.sku.valueSkuJson;
+    return state.sku.valueSkuJson || {};
   }
   ,
 };

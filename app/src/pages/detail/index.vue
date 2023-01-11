@@ -2,18 +2,36 @@
   <div>
     <TypeNav class="type-nav"></TypeNav>
     <div class="item-category">
-      <li><a href="">{{categoryView.category1Name}}</a><span>/</span></li>
-      <li><a href="">{{categoryView.category2Name}}</a><span>/</span></li>
-      <li><a href="">{{categoryView.category3Name}}</a><span>/</span></li>
+      <li v-show="categoryView.category1Name">
+        <a href="">{{ categoryView.category1Name }}</a
+        ><span>/</span>
+      </li>
+      <li v-show="categoryView.category2Name">
+        <a href="">{{ categoryView.category2Name }}</a
+        ><span>/</span>
+      </li>
+      <li v-show="categoryView.category3Name">
+        <a href="">{{ categoryView.category3Name }}</a
+        ><span>/</span>
+      </li>
       <li>{{ skuInfo.skuName }}</li>
     </div>
     <div class="item-detail">
       <div class="left">
-        <img ref="placeholder" :src="skuInfo.skuDefaultImg" alt="" />
+        <div class="col-1">
+          <img ref="placeholder" :src="skuInfo.skuDefaultImg" alt="" />
+          <div class="preview" @mousemove="zoomIn" @mouseout="zoomOut"></div>
+          <div class="amplifier" ref="amplifier">
+            <img ref="bigImage" :src="skuInfo.skuDefaultImg" alt="" />
+          </div>
+          <div class="mask" ref="mask"></div>
+        </div>
         <div class="carousel">
           <button class="prev" @click="slideCarousel(-390)">&lt;</button>
           <ul ref="thumbnailList">
-            <li v-for="image in skuInfo.skuImageList" :key="image.id"><img :src="image.imgUrl" alt="" @mouseover="replaceImage" /></li>
+            <li v-for="image in skuInfo.skuImageList" :key="image.id">
+              <img :src="image.imgUrl" alt="" @mouseover="replaceImage" />
+            </li>
           </ul>
           <!-- <li><img src="./images/b3.png" alt="" @mouseover="replaceImage" /></li> -->
           <!-- <li><img src="./images/b2.png" alt="" @mouseover="replaceImage" /></li> -->
@@ -22,9 +40,9 @@
       </div>
       <div class="right">
         <h5>
-          {{skuInfo.skuName}}
+          {{ skuInfo.skuName }}
         </h5>
-        <p>推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返</p>
+        <p>{{ skuInfo.skuDesc }}</p>
         <div class="item-paras">
           <li>
             <h5>价格</h5>
@@ -47,11 +65,23 @@
             <p>{{ skuInfo.weight }}</p>
           </li>
           <hr />
-          <li class="selections" v-for="saleAttr in spuSaleAttrList" :key="saleAttr.saleAttrId">
-            <h5>{{saleAttr.saleAttrName}}</h5>
+          <li
+            class="selections"
+            v-for="saleAttr in spuSaleAttrList"
+            :key="saleAttr.id"
+          >
+            <h5>{{ saleAttr.saleAttrName }}</h5>
             <ul>
-              <button v-for="attrValue in saleAttr.spuSaleAttrValueList" :key="attrValue.baseSaleAttrId"
-              @click="selectSaleAttr(skuInfo.id)">{{attrValue.saleAttrValueName}}</button>
+              <button
+                v-for="attrValue in saleAttr.spuSaleAttrValueList"
+                :key="attrValue.id"
+                :class="{ highlight: attrValue.isChecked === '1' }"
+                @click="
+                  selectSaleAttr(saleAttr.spuSaleAttrValueList, attrValue)
+                "
+              >
+                {{ attrValue.saleAttrValueName }}
+              </button>
               <!-- @click 参数不对，要改 -->
             </ul>
           </li>
@@ -70,8 +100,12 @@
     <div class="more">
       <div class="left">
         <div class="title">
-          <router-link active-class="active-left" :to="{name:'related'}">相关分类</router-link>
-          <router-link active-class="active-left" :to="{name:'recommend'}">推荐品牌</router-link>
+          <router-link active-class="active-left" :to="{ name: 'related' }"
+            >相关分类</router-link
+          >
+          <router-link active-class="active-left" :to="{ name: 'recommend' }"
+            >推荐品牌</router-link
+          >
         </div>
         <router-view></router-view>
       </div>
@@ -82,7 +116,7 @@
             <ul>
               <li class="current-item">
                 <img src="./images/part01.png" alt="" />
-                <h3>￥{{skuInfo.price}}</h3>
+                <h3>￥{{ skuInfo.price }}</h3>
               </li>
               <span>+</span>
               <li>
@@ -124,7 +158,9 @@
           </ul>
           <div class="content">
             <ul class="item-basic">
-              <li v-for="attr in skuInfo.skuAttrValueList" :key="attr.attrId">{{attr.attrName}}:{{ attr.valueName }}</li>
+              <li v-for="attr in skuInfo.skuAttrValueList" :key="attr.attrId">
+                {{ attr.attrName }}:{{ attr.valueName }}
+              </li>
               <li>后置摄像头：1200万像素</li>
               <li>前置摄像头：500万像素</li>
               <li>核 数：其他</li>
@@ -189,7 +225,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 import Slides from "../home/unit/slides";
 export default {
   name: "Detail",
@@ -199,8 +235,14 @@ export default {
       quantity: 1,
     };
   },
-  computed:{
-    ...mapGetters(['categoryView','price','skuInfo','spuSaleAttrList','valueSkuJson']),
+  computed: {
+    ...mapGetters([
+      "categoryView",
+      "price",
+      "skuInfo",
+      "spuSaleAttrList",
+      "valueSkuJson",
+    ]),
   },
   methods: {
     replaceImage({ target }) {
@@ -208,7 +250,7 @@ export default {
       // console.log(this.$refs);
       this.$refs.placeholder.src = target.src;
     },
-    slideCarousel(pixel){
+    slideCarousel(pixel) {
       let left = 0;
     },
     modifyQuantity(quantity) {
@@ -218,16 +260,40 @@ export default {
       }
     },
     getItemDetail() {
-      this.$store.dispatch('getItemDetail',this.$route.params.id);
+      this.$store.dispatch("getItemDetail", this.$route.params.id);
     },
+    selectSaleAttr(valueList, value) {
+      // console.log(valueList, valueId);
+      valueList.forEach((element) => {
+        element.isChecked = "0";
+      });
+      value.isChecked = "1";
+    },
+    zoomIn(event) {
+      this.$refs.amplifier.style.display = "block";
+      const mask = this.$refs.mask;
+      const bigImage = this.$refs.bigImage;
+      let top = event.offsetY - 0.5 * mask.offsetWidth;
+      let left = event.offsetX - 0.5 * mask.offsetHeight;
 
+      if (top < 0) top = 0;
+      if (left < 0) left = 0;
+      if (top > mask.offsetHeight) top = mask.offsetHeight;
+      if (left > mask.offsetWidth) left = mask.offsetWidth;
+      mask.style.top = top +'px';
+      mask.style.left = left + 'px';
+      bigImage.style.top = -(2*top) + 'px';
+      bigImage.style.left = -(2*left) + 'px';
+    },
+    zoomOut() {
+      // console.log('out');
+      this.$refs.amplifier.style.display = "none";
+    },
   },
-  beforeMount() {
-    
-  },
-  mounted(){
+  beforeMount() {},
+  mounted() {
     this.getItemDetail();
-  }
+  },
 };
 </script>
 
@@ -273,10 +339,52 @@ button {
   width: 400px;
 }
 
-.item-detail .left > img {
+.item-detail .left .col-1 {
+  position: relative;
   width: 100%;
   height: 400px;
+}
+
+.item-detail .left .col-1 .preview {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+.item-detail .left .col-1 img {
+  width: 100%;
+  height: 100%;
   border: 1px solid rgb(220, 220, 220);
+}
+
+.item-detail .left .col-1 .amplifier {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 98;
+  left: 100%;
+  top: 0;
+  display: none;
+  overflow: hidden;
+}
+.item-detail .left .col-1 .amplifier img{
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+
+.item-detail .left .col-1 .mask {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(2, 219, 6, 0.335);
 }
 
 .item-detail .left .carousel {
@@ -371,6 +479,11 @@ button {
   font-size: 11px;
 }
 
+.item-detail .right .item-paras .selections .highlight {
+  border: 1px solid rgb(5, 176, 5);
+  box-shadow: 0.5px 0.5px 0 0 rgb(4, 161, 67);
+}
+
 .item-detail .right .item-paras li > h5 {
   width: 50px;
   font-weight: 500;
@@ -444,7 +557,6 @@ button {
 .more .left .title a:first-child {
   border-right: 1px solid rgb(220, 220, 220);
 }
-
 
 .more .left .title .active-left {
   border-bottom: 1px solid white;
@@ -582,5 +694,4 @@ button {
   color: rgb(227, 1, 1);
   font-size: 16px;
 }
-
 </style>
