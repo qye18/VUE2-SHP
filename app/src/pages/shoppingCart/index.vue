@@ -77,6 +77,9 @@
 <script>
 export default {
   name: "shoppingCart",
+  mounted() {
+    this.$store.dispatch('getShoppingCartList')
+  }
 };
 </script>
 

@@ -45,3 +45,10 @@ export const reqAddCart = (skuId, skuNum) => {
     method: 'post'
   })
 }
+
+export const reqShoppingCartList = ()=> {
+  return requests({
+    url:'/cart/cartList',
+    method:'get'
+  })
+}
