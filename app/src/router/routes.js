@@ -101,6 +101,7 @@ export default [
     path:'shoppingCart',
     component:ShoppingCart,
     meta:{
+      showTopNav:true,
       hasFooter:true,
     }
   }
