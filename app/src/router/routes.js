@@ -89,6 +89,10 @@ export default [
   {
     name:'addToCartSuccess',
     path:'/addToCartSuccess',
-    component:AddToCartSuccess
+    component:AddToCartSuccess,
+    meta: {
+      showTopNav:true,
+      hasFooter:true,
+    }
   }
 ]
