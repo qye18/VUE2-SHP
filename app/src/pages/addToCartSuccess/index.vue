@@ -6,14 +6,21 @@
         <div class="col-1">
           <img src="../images/icons.png" alt="" />
           <div>
-            <p>iPhone 13</p>
-            <p class="para">数量：<span>1</span></p>
-            <p class="para">颜色：<span>粉色</span></p>
+            <p>{{ skuInfo=={}?'':skuInfo.skuDesc }}</p>
+            <p class="para">
+              数量：<span>{{ $route.query.quantity }}</span>
+            </p>
           </div>
         </div>
         <div class="col-2">
-          <a href="">查看商品详情</a>
-          <a href="">去购物车结算</a>
+          <router-link
+            :to="`/detail/${skuInfo.id}`"
+            >查看商品详情</router-link
+          >
+          <router-link
+          :to="{
+              name: 'detail',
+              }">去购物车结算</router-link>
         </div>
       </div>
     </div>
@@ -23,6 +30,14 @@
 <script>
 export default {
   name: "addToCartSuccess",
+  data() {
+    return {
+      skuInfo: {},
+    };
+  },
+  mounted() {
+    this.skuInfo = JSON.parse(sessionStorage.getItem("skuInfo"));
+  },
 };
 </script>
 
@@ -33,7 +48,7 @@ export default {
 }
 .cartPage .content {
   /* border:1px solid rgb(227, 1, 1); */
-  background-color: rgb(240,240,240);
+  background-color: rgb(240, 240, 240);
   width: 1155px;
   height: 120px;
   padding: 10px 20px;
@@ -48,6 +63,7 @@ export default {
 .cartPage h4 {
   font-weight: 500;
   margin-bottom: 20px;
+  color: rgb(44, 161, 42);
 }
 
 .cartPage .row-1 {
@@ -59,26 +75,23 @@ export default {
   display: flex;
 }
 
-.cartPage .row-1 .col-1 p.para{
-  color: rgb(150,150,150);
+.cartPage .row-1 .col-1 p.para {
+  color: rgb(150, 150, 150);
   font-size: 11px;
 }
-
 
 .cartPage .row-1 .col-2 {
   margin-right: 50px;
 }
 
-.cartPage .row-1 .col-2 a{
+.cartPage .row-1 .col-2 a {
   padding: 10px 20px;
-  border: 1px solid rgb(220,220,220);
+  border: 1px solid rgb(220, 220, 220);
   margin: 0 5px;
   font-size: 14px;
 }
 
-.cartPage .row-1 .col-2 a:hover{
-  background-color: rgb(220,220,220);
+.cartPage .row-1 .col-2 a:hover {
+  background-color: rgb(220, 220, 220);
 }
-
-
 </style>

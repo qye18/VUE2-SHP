@@ -87,11 +87,19 @@
           </li>
         </div>
         <div class="item-quantity">
-          <button class="minus" @click="quantity>1?quantity--:quantity = 1">-</button>
+          <button
+            class="minus"
+            @click="quantity > 1 ? quantity-- : (quantity = 1)"
+          >
+            -
+          </button>
           <input type="text" v-model="quantity" @change="changeQuantity" />
           <button class="plus" @click="quantity++">+</button>
-          <router-link class="add-to-cart" @click="addToCart"
-          :to="{name:'addToCartSuccess'}">加入购物车</router-link>
+          <button
+            class="add-to-cart"
+            @click="addToCart"
+            >加入购物车</button
+          >
         </div>
       </div>
     </div>
@@ -276,21 +284,21 @@ export default {
       if (left < 0) left = 0;
       if (top > mask.offsetHeight) top = mask.offsetHeight;
       if (left > mask.offsetWidth) left = mask.offsetWidth;
-      mask.style.top = top +'px';
-      mask.style.left = left + 'px';
-      bigImage.style.top = -(2*top) + 'px';
-      bigImage.style.left = -(2*left) + 'px';
+      mask.style.top = top + "px";
+      mask.style.left = left + "px";
+      bigImage.style.top = -(2 * top) + "px";
+      bigImage.style.left = -(2 * left) + "px";
     },
     zoomOut() {
       // console.log('out');
       this.$refs.amplifier.style.display = "none";
       this.$refs.mask.style.display = "none";
     },
-    changeQuantity(event){
+    changeQuantity(event) {
       // 如果是 文本字符串*1= NaN, 数字*1 = 数字
       let number = event.target.value * 1;
-      if (isNaN(number) || number < 1 ) {
-        console.log('illegal');
+      if (isNaN(number) || number < 1) {
+        console.log("illegal");
         this.quantity = 1;
       } else {
         this.quantity = parseInt(number);
@@ -306,13 +314,26 @@ export default {
       //     console.log('失败');
       //   }
       // )
-        try {
-          await this.$store.dispatch('addToCart',{ id: this.$route.params.id,quantity:this.quantity});
-          // 成功加入购物车，路由跳转
-        } catch (error) {
-          alert(error)
-        }
-    }
+      try {
+        let result = await this.$store.dispatch("addToCart", {
+          id: this.$route.params.id,
+          quantity: this.quantity,
+        });
+
+        // 成功加入购物车，添加数据到本地储存
+        sessionStorage.setItem('skuInfo',JSON.stringify(this.skuInfo));
+        // sessionStorage.setItem('skuColor',this.skuInfo.);
+        // 路由跳转
+        this.$router.push({
+          name: "addToCartSuccess",
+          query: {
+            quantity: this.quantity,
+          },
+        });
+      } catch (error) {
+        alert(error);
+      }
+    },
   },
   beforeMount() {},
   mounted() {
@@ -322,8 +343,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .type-nav,
 .item-detail,
 .item-category,
@@ -391,7 +410,7 @@ export default {
   display: none;
   overflow: hidden;
 }
-.item-detail .left .col-1 .amplifier img{
+.item-detail .left .col-1 .amplifier img {
   width: 200%;
   height: 200%;
   position: absolute;
@@ -399,11 +418,11 @@ export default {
   top: 0;
 }
 
-
 .item-detail .left .col-1 .mask {
   width: 50%;
   height: 50%;
   position: absolute;
+  display: none;
   top: 0;
   left: 0;
   background-color: rgba(2, 219, 6, 0.335);
