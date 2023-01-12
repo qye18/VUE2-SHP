@@ -8,6 +8,7 @@ import QrcodeLogin from '@/pages/login/qrcodeLogin'
 import Related from '@/pages/detail/related'
 import Recommend from '@/pages/detail/recommend'
 import AddToCartSuccess from '@/pages/addToCartSuccess'
+import ShoppingCart from '@/pages/shoppingCart'
 export default [
   {
     name:'home',
@@ -92,6 +93,14 @@ export default [
     component:AddToCartSuccess,
     meta: {
       showTopNav:true,
+      hasFooter:true,
+    }
+  },
+  {
+    name:'shoppingCart',
+    path:'shoppingCart',
+    component:ShoppingCart,
+    meta:{
       hasFooter:true,
     }
   }

@@ -19,8 +19,8 @@
           >
           <router-link
           :to="{
-              name: 'detail',
-              }">去购物车结算</router-link>
+            name:'shoppingCart'
+          }">去购物车结算</router-link>
         </div>
       </div>
     </div>
