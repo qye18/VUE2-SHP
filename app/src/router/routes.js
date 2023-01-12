@@ -7,7 +7,7 @@ import AccoutLogin from '@/pages/login/accountLogin'
 import QrcodeLogin from '@/pages/login/qrcodeLogin'
 import Related from '@/pages/detail/related'
 import Recommend from '@/pages/detail/recommend'
-
+import AddToCartSuccess from '@/pages/addToCartSuccess'
 export default [
   {
     name:'home',
@@ -86,4 +86,9 @@ export default [
     path:'*',
     redirect:'/home'
   },
+  {
+    name:'addToCartSuccess',
+    path:'/addToCartSuccess',
+    component:AddToCartSuccess
+  }
 ]

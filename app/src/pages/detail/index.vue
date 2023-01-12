@@ -90,7 +90,8 @@
           <button class="minus" @click="quantity>1?quantity--:quantity = 1">-</button>
           <input type="text" v-model="quantity" @change="changeQuantity" />
           <button class="plus" @click="quantity++">+</button>
-          <button class="add-to-cart" @click="addToCart">加入购物车</button>
+          <router-link class="add-to-cart" @click="addToCart"
+          :to="{name:'addToCartSuccess'}">加入购物车</router-link>
         </div>
       </div>
     </div>
@@ -321,9 +322,7 @@ export default {
 </script>
 
 <style scoped>
-button {
-  cursor: pointer;
-}
+
 
 .type-nav,
 .item-detail,
