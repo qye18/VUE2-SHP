@@ -1,14 +1,21 @@
 import {reqShoppingCartList} from '@/api'
 const state = {
-  shoppingCartList:[]
+  shoppingCartList:[],
+  cartInfoList:[]
 };
 const actions = {
   async getShoppingCartList({commit}){
     const result = await reqShoppingCartList();
-    console.log(result);
+    if (result.code == 200) {
+      commit("GETSHOPPINGCARTLIST",result.data[0].cartInfoList)
+    }
   }
 };
-const mutations = {};
+const mutations = {
+  GETSHOPPINGCARTLIST(state,cartInfoList) {
+    state.cartInfoList = cartInfoList;
+  }
+};
 const getters = {};
 
 export default {

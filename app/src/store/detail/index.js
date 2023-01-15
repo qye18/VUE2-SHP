@@ -14,8 +14,8 @@ const actions = {
       commit('GETITEMDETAIL',result.data);
     }
   },
-  async addToCart({commit},{id,quantity}) {
-    let result = await reqAddCart(id, quantity);
+  async addToCart({commit},{skuId,skuNum}) {
+    let result = await reqAddCart(skuId, skuNum);
     if (result.code === 200) {
       return 'ok'
     } else {

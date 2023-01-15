@@ -302,9 +302,9 @@ export default {
       //   }
       // )
       try {
-        let result = await this.$store.dispatch("addToCart", {
-          id: this.$route.params.id,
-          quantity: this.quantity,
+        await this.$store.dispatch("addToCart", {
+          skuId: this.$route.params.id,
+          skuNum: this.quantity,
         });
 
         // 成功加入购物车，添加数据到本地储存

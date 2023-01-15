@@ -9,43 +9,21 @@
       <li>操作</li>
     </div>
     <div class="row-2">
-      <li class="shopping-item">
+      <li v-for="cartItem in $store.state.shoppingCart.cartInfoList" :key="cartItem.id" class="shopping-item">
         <div class="detail">
-          <input type="checkbox" name="" id="" />
-          <a href=""><img src="./itemlike03.png" alt="" /></a>
+          <input type="checkbox" :checked="cartItem.isChecked===1" name="" id="" />
+          <a href=""><img :src="cartItem.imgUrl" alt="" /></a>
           <a class="desc">
-            Redmi 10X 4G Helio G85游戏芯 4GB+128GB 明月灰 游戏智能手机 小米
-            红米</a
+            {{cartItem.skuName}}</a
           >
         </div>
-        <p class="price">￥999</p>
+        <p class="price">￥{{cartItem.skuPrice}}</p>
         <div class="quantity">
-          <button class="desc">-</button>
-          <input type="text" />
-          <button class="asc">+</button>
+          <button class="desc" @click="updateQuantity(cartItem,-1,'desc')">-</button>
+          <input type="text" @change="updateQuantity(cartItem, $event.target.value*1,'change')" :value="cartItem.skuNum"/>
+          <button class="asc" @click="updateQuantity(cartItem,1,'asc')">+</button>
         </div>
-        <p class="sub-total">￥4995</p>
-        <div class="operation">
-          <button class="delete">删除</button>
-          <button class="add-to-favor">移入收藏夹</button>
-        </div>
-      </li>
-      <li class="shopping-item">
-        <div class="detail">
-          <input type="checkbox" name="" id="" />
-          <a href=""><img src="./itemlike03.png" alt="" /></a>
-          <a class="desc">
-            Redmi 10X 4G Helio G85游戏芯 4GB+128GB 明月灰 游戏智能手机 小米
-            红米</a
-          >
-        </div>
-        <p class="price">￥999</p>
-        <div class="quantity">
-          <button class="desc">-</button>
-          <input type="text" />
-          <button class="asc">+</button>
-        </div>
-        <p class="sub-total">￥4995</p>
+        <p class="sub-total">￥{{ cartItem.skuPrice * cartItem.skuNum }}</p>
         <div class="operation">
           <button class="delete">删除</button>
           <button class="add-to-favor">移入收藏夹</button>
@@ -55,7 +33,7 @@
     <div class="sum-up">
       <div class="left">
         <label for="selectAll">
-          <input type="checkbox" name="" id="selectAll" />
+          <input :checked="isAllChecked" type="checkbox" name="" id="selectAll" />
           全选
         </label>
         <button class="delete-all">删除选中的商品</button>
@@ -63,9 +41,9 @@
         <button class="delete-all-nonsense">清除下柜商品</button>
       </div>
       <div class="right">
-        <p>已选择<span>1</span>件商品</p>
+        <p>已选择<span>{{ totalItemNum }}</span>件商品</p>
         <div class="price-total">
-          <p>总价：<span>￥4999</span></p>
+          <p>总价：<span>￥{{ totalPrice }}</span></p>
           <p>促销<span>￥0</span></p>
         </div>
         <button class="pay">结算</button>
@@ -75,10 +53,70 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: "shoppingCart",
   mounted() {
-    this.$store.dispatch('getShoppingCartList')
+    this.$store.dispatch('getShoppingCartList');
+  },
+  computed:{
+    ...mapState({
+      cartInfoList:state => state.shoppingCart.cartInfoList
+    }),
+    
+    totalPrice(){
+    // forEach写法
+      /* this.cartInfoList.forEach(cartItem => {
+        if (cartItem.isChecked) {
+          total+=cartItem.skuPrice * cartItem.skuNum;
+        }
+     }); */
+    // reduce写法
+    return this.cartInfoList.reduce((sum,item) => {
+      if (item.isChecked) {
+         sum += item.skuPrice*item.skuNum;
+      }
+      return sum
+    },0)
+    },
+    totalItemNum(){
+      return this.cartInfoList.reduce((sum,item) => {
+        if (item.isChecked) {
+          sum++;
+        }
+        return sum;
+      },0)
+    },
+    isAllChecked() {
+      return this.cartInfoList.every(item => item.isChecked==1);
+    }
+   
+  },
+  methods:{
+    async updateQuantity(cartItem,num,type) {
+      switch(type){
+        case 'asc':
+          num = 1;
+          break;
+        case 'desc':
+          num = cartItem.skuNum > 1? -1:0;
+          break;
+        case 'change':
+          num = num >= 1? num -cartItem.skuNum : 0
+      }
+      try {
+        await this.$store.dispatch('addToCart',{skuId:cartItem.skuId,skuNum:num});
+        console.log('修改购物车数据成功');
+        this.$store.dispatch('getShoppingCartList');
+      } catch (error) {
+        alert('修改购物车数据失败')
+      }
+      // 这里不能直接写，需要等修改数据后，再获取数据。所以要用async，await，
+      // try catch是为了确保修改数据库数据成功才调用getShoppingCartList获取数据
+      // this.$store.dispatch('addToCart',{skuId:cartItem.skuId,skuNum:num});
+      //  this.$store.dispatch('getShoppingCartList');
+
+    }
   }
 };
 </script>
