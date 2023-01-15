@@ -1,7 +1,9 @@
 import {reqItemDetail, reqAddCart} from '@/api'
+import { createId } from "@/utils/uuid_token";
 
 const state = {
   sku:{},
+  uuid_token:createId()
 };
 const actions = {
   async getItemDetail({commit},skuid){

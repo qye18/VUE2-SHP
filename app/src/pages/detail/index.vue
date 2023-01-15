@@ -170,19 +170,6 @@
               <li v-for="attr in skuInfo.skuAttrValueList" :key="attr.attrId">
                 {{ attr.attrName }}:{{ attr.valueName }}
               </li>
-              <li>后置摄像头：1200万像素</li>
-              <li>前置摄像头：500万像素</li>
-              <li>核 数：其他</li>
-              <li>频 率：以官网信息为准</li>
-              <li>品牌： Apple</li>
-              <li>商品名称：APPLEiPhone 6s Plus</li>
-              <li>商品编号：1861098</li>
-              <li>商品毛重：0.51kg</li>
-              <li>商品产地：中国大陆</li>
-              <li>热点：指纹识别，Apple Pay，金属机身，拍照神器</li>
-              <li>系统：苹果（IOS）</li>
-              <li>像素：1000-1600万</li>
-              <li>机身内存：64GB</li>
             </ul>
           </div>
         </div>
