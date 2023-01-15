@@ -25,7 +25,7 @@
         </div>
         <p class="sub-total">￥{{ cartItem.skuPrice * cartItem.skuNum }}</p>
         <div class="operation">
-          <button class="delete">删除</button>
+          <button @click="deleteCartItem(cartItem)" class="delete">删除</button>
           <button class="add-to-favor">移入收藏夹</button>
         </div>
       </li>
@@ -116,6 +116,14 @@ export default {
       // this.$store.dispatch('addToCart',{skuId:cartItem.skuId,skuNum:num});
       //  this.$store.dispatch('getShoppingCartList');
 
+    },
+    async deleteCartItem(cartItem) {
+      try {
+        await this.$store.dispatch('deleteCartItem',cartItem.skuId);
+        this.$store.dispatch('getShoppingCartList');
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

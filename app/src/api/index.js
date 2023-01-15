@@ -52,3 +52,10 @@ export const reqShoppingCartList = ()=> {
     method:'get'
   })
 }
+
+export const reqDeleteCartItem = (skuId) => {
+  return requests({
+    url: `/cart/deleteCart/${skuId}`,
+    method:'delete'
+  })
+}
