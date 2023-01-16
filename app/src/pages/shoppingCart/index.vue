@@ -9,19 +9,37 @@
       <li>操作</li>
     </div>
     <div class="row-2">
-      <li v-for="cartItem in $store.state.shoppingCart.cartInfoList" :key="cartItem.id" class="shopping-item">
+      <li
+        v-for="cartItem in $store.state.shoppingCart.cartInfoList"
+        :key="cartItem.id"
+        class="shopping-item"
+      >
         <div class="detail">
-          <input type="checkbox" :checked="cartItem.isChecked===1" name="" id="" />
+          <input
+            type="checkbox"
+            @click="checkCartItem(cartItem)"
+            :checked="cartItem.isChecked === 1"
+            name=""
+            id=""
+          />
           <a href=""><img :src="cartItem.imgUrl" alt="" /></a>
-          <a class="desc">
-            {{cartItem.skuName}}</a
-          >
+          <a class="desc"> {{ cartItem.skuName }}</a>
         </div>
-        <p class="price">￥{{cartItem.skuPrice}}</p>
+        <p class="price">￥{{ cartItem.skuPrice }}</p>
         <div class="quantity">
-          <button class="desc" @click="updateQuantity(cartItem,-1,'desc')">-</button>
-          <input type="text" @change="updateQuantity(cartItem, $event.target.value*1,'change')" :value="cartItem.skuNum"/>
-          <button class="asc" @click="updateQuantity(cartItem,1,'asc')">+</button>
+          <button class="desc" @click="updateQuantity(cartItem, -1, 'desc')">
+            -
+          </button>
+          <input
+            type="text"
+            @change="
+              updateQuantity(cartItem, $event.target.value * 1, 'change')
+            "
+            :value="cartItem.skuNum"
+          />
+          <button class="asc" @click="updateQuantity(cartItem, 1, 'asc')">
+            +
+          </button>
         </div>
         <p class="sub-total">￥{{ cartItem.skuPrice * cartItem.skuNum }}</p>
         <div class="operation">
@@ -33,17 +51,28 @@
     <div class="sum-up">
       <div class="left">
         <label for="selectAll">
-          <input :checked="isAllChecked" type="checkbox" name="" id="selectAll" />
+          <input
+            :checked="isAllChecked"
+            type="checkbox"
+            name=""
+            id="selectAll"
+            @click="checkAllCartItem"
+          />
           全选
         </label>
-        <button class="delete-all">删除选中的商品</button>
+        <button @click="deleteAllCheckedItem" class="delete-all">删除选中的商品</button>
         <button class="add-all-to-favor">移到我的收藏夹</button>
         <button class="delete-all-nonsense">清除下柜商品</button>
       </div>
       <div class="right">
-        <p>已选择<span>{{ totalItemNum }}</span>件商品</p>
+        <p>
+          已选择<span>{{ totalItemNum }}</span
+          >件商品
+        </p>
         <div class="price-total">
-          <p>总价：<span>￥{{ totalPrice }}</span></p>
+          <p>
+            总价：<span>￥{{ totalPrice }}</span>
+          </p>
           <p>促销<span>￥0</span></p>
         </div>
         <button class="pay">结算</button>
@@ -53,79 +82,109 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   name: "shoppingCart",
   mounted() {
-    this.$store.dispatch('getShoppingCartList');
+    this.$store.dispatch("getShoppingCartList");
   },
-  computed:{
+  computed: {
     ...mapState({
-      cartInfoList:state => state.shoppingCart.cartInfoList
+      cartInfoList: (state) => state.shoppingCart.cartInfoList,
     }),
-    
-    totalPrice(){
-    // forEach写法
+
+    totalPrice() {
+      // forEach写法
       /* this.cartInfoList.forEach(cartItem => {
         if (cartItem.isChecked) {
           total+=cartItem.skuPrice * cartItem.skuNum;
         }
      }); */
-    // reduce写法
-    return this.cartInfoList.reduce((sum,item) => {
-      if (item.isChecked) {
-         sum += item.skuPrice*item.skuNum;
-      }
-      return sum
-    },0)
+      // reduce写法
+      return this.cartInfoList.reduce((sum, item) => {
+        if (item.isChecked) {
+          sum += item.skuPrice * item.skuNum;
+        }
+        return sum;
+      }, 0);
     },
-    totalItemNum(){
-      return this.cartInfoList.reduce((sum,item) => {
+    totalItemNum() {
+      return this.cartInfoList.reduce((sum, item) => {
         if (item.isChecked) {
           sum++;
         }
         return sum;
-      },0)
+      }, 0);
     },
     isAllChecked() {
-      return this.cartInfoList.every(item => item.isChecked==1);
-    }
-   
+      return this.cartInfoList.every((item) => item.isChecked == 1);
+    },
   },
-  methods:{
-    async updateQuantity(cartItem,num,type) {
-      switch(type){
-        case 'asc':
+  methods: {
+    async updateQuantity(cartItem, num, type) {
+      switch (type) {
+        case "asc":
           num = 1;
           break;
-        case 'desc':
-          num = cartItem.skuNum > 1? -1:0;
+        case "desc":
+          num = cartItem.skuNum > 1 ? -1 : 0;
           break;
-        case 'change':
-          num = num >= 1? num -cartItem.skuNum : 0
+        case "change":
+          num = num >= 1 ? num - cartItem.skuNum : 0;
       }
       try {
-        await this.$store.dispatch('addToCart',{skuId:cartItem.skuId,skuNum:num});
-        console.log('修改购物车数据成功');
-        this.$store.dispatch('getShoppingCartList');
+        await this.$store.dispatch("addToCart", {
+          skuId: cartItem.skuId,
+          skuNum: num,
+        });
+        console.log("修改购物车数据成功");
+        this.$store.dispatch("getShoppingCartList");
       } catch (error) {
-        alert('修改购物车数据失败')
+        alert("修改购物车数据失败");
       }
       // 这里不能直接写，需要等修改数据后，再获取数据。所以要用async，await，
       // try catch是为了确保修改数据库数据成功才调用getShoppingCartList获取数据
       // this.$store.dispatch('addToCart',{skuId:cartItem.skuId,skuNum:num});
       //  this.$store.dispatch('getShoppingCartList');
-
     },
     async deleteCartItem(cartItem) {
       try {
-        await this.$store.dispatch('deleteCartItem',cartItem.skuId);
-        this.$store.dispatch('getShoppingCartList');
+        await this.$store.dispatch("deleteCartItem", cartItem.skuId);
+        this.$store.dispatch("getShoppingCartList");
       } catch (error) {
         console.log(error);
       }
+    },
+    async checkCartItem(cartItem) {
+      try {
+        let isChecked = event.target.checked ? "1" : "0";
+        await this.$store.dispatch("checkCartItem", {
+          skuId: cartItem.skuId,
+          isChecked,
+        });
+        this.$store.dispatch("getShoppingCartList");
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    async checkAllCartItem() {
+      try {
+        let isChecked = event.target.checked ? "1":"0";
+        await this.$store.dispatch('checkAllCartItem',isChecked);
+        this.$store.dispatch('getShoppingCartList');
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    async deleteAllCheckedItem(){
+      try {
+        await this.$store.dispatch('deleteAllCheckedItem');
+        this.$store.dispatch('getShoppingCartList');
+      } catch (error) {
+        alert(error.message);
+      }
     }
-  }
+  },
 };
 </script>
 

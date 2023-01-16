@@ -561,6 +561,7 @@ export default {
   background-color: rgb(227, 1, 1);
   color: white;
   padding: 10px 20px;
+  cursor: pointer;
 }
 
 .more {

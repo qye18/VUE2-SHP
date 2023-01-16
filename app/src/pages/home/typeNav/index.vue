@@ -89,6 +89,10 @@ export default {
 </script>
 
 <style scoped>
+
+a {
+  cursor: pointer;
+}
 .top-bar {
   display: flex;
   height: 50px;

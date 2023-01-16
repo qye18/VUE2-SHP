@@ -59,3 +59,10 @@ export const reqDeleteCartItem = (skuId) => {
     method:'delete'
   })
 }
+
+export const reqCartItemChecked = (skuID,isChecked) => {
+  return requests({
+    url:`/cart/checkCart/${skuID}/${isChecked}`,
+    method:'get'
+  })
+}

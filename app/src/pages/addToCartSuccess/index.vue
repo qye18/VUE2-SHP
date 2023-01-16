@@ -72,6 +72,7 @@ export default {
   justify-content: space-between;
 }
 .cartPage .row-1 .col-1 {
+  width: 50%;
   display: flex;
 }
 
@@ -91,7 +92,13 @@ export default {
   font-size: 14px;
 }
 
+.cartPage .row-1 .col-2 a:nth-child(2) {
+  background-color: rgb(227,1,1);
+  color: white;
+}
+
 .cartPage .row-1 .col-2 a:hover {
   background-color: rgb(220, 220, 220);
+  color: black;
 }
 </style>

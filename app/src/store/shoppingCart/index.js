@@ -1,4 +1,4 @@
-import {reqShoppingCartList,reqDeleteCartItem} from '@/api'
+import {reqShoppingCartList,reqDeleteCartItem,reqCartItemChecked} from '@/api'
 const state = {
   shoppingCartList:[],
   cartInfoList:[]
@@ -17,6 +17,34 @@ const actions = {
     } else {
       return Promise.reject(new Error('删除商品失败'));
     }
+  },
+  deleteAllCheckedItem(context){
+    let promiseAll = [];
+    context.state.cartInfoList.forEach(element => {
+      if (element.isChecked) {
+        let p = context.dispatch('deleteCartItem',element.skuId);
+        promiseAll.push(p);
+      }
+    })
+    return Promise.all(promiseAll);
+  }
+  ,
+  async checkCartItem({commit},{skuId,isChecked}) {
+    let result = await reqCartItemChecked(skuId,isChecked);
+    if (result.code == 200) {
+      return '改变isChecked状态成功'
+    } else {
+      return Promise.reject(new Error('改变isChecked状态失败'))
+    }
+  },
+  checkAllCartItem(context,isChecked) {
+    // console.log(context.state.cartInfoList);
+    let promiseAll = [];
+    context.state.cartInfoList.forEach(element => {
+      let p = context.dispatch('checkCartItem', {skuId:element.skuId, isChecked})
+      promiseAll.push(p);
+    });
+    return Promise.all(promiseAll);
   }
 };
 const mutations = {
