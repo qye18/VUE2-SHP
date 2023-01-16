@@ -66,3 +66,18 @@ export const reqCartItemChecked = (skuID,isChecked) => {
     method:'get'
   })
 }
+
+export const reqVerificationCode = (phone) => {
+  return requests({
+    url:`/user/passport/sendCode/${phone}`,
+    method:'get'
+  })
+}
+
+export const reqRegisterAccount = (data) => {
+  return requests({
+    url:'/user/passport/register',
+    method:'post',
+    data
+  })
+}

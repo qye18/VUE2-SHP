@@ -113,3 +113,13 @@
 # 2023/01/14
   购物车，实现修改数据，并更新到后端
     - 需要派发action，更新后端数据 和 获取新数据刷新页面
+
+# 2023/01/15
+  购物车 全选 / 删除选中商品 （Promise.all重点）
+    - 需要发多次的delelte/updateCheck请求，
+      把每个请求的结果添加到list中，因为delete和update都用到了async/await， 所以返回的一定是promise
+      用Promise.all()来判断是否每一个发送的请求都成功了，
+      用async/await得到结果后，如果成功则发送请求获取购物车新数据，
+      如果失败则报出错误原因
+
+      Promise.all([promiseList])返回成功的promise如果list里的每一个promise都成功，返回失败的promise如果list有任何一个promise失败
