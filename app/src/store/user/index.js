@@ -11,9 +11,13 @@ const actions = {
       alert(result.message)
     }
   },
-  async RegisterAccount({commit},data) {
-    let result = await reqRegisterAccount(data);
-    console.log(result);
+  async RegisterAccount({commit},user) {
+    let result = await reqRegisterAccount(user);
+    if (result.code == 200) {
+      return '注册成功'
+    } else {
+      return Promise.reject(new Error(result.message))
+    }
   }
 }
 const mutations = {

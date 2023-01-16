@@ -73,19 +73,21 @@ export default {
       }
     },
     async registerAccount() {
-      // 改 ######################################################
       try {
-        const { phone, veriCode, password } = this;
-        phone &&
-          veriCode &&
-          password &&
-          password == this.verifiedPassword &&
-          await this.$store.dispatch("RegisterAccount", {
-            phone: this.phone,
-            password: this.password,
-            code: this.code,
-          });
-      } catch (error) {}
+      const { phone, veriCode, password, verifiedPassword } = this;
+      phone &&
+      veriCode &&
+      password &&
+      password == verifiedPassword &&
+      await this.$store.dispatch("RegisterAccount", {
+        phone,
+        password,
+        code:veriCode,
+      });
+      this.$router.push('/login');
+      } catch (error) {
+        alert(error);
+      }
     },
   },
 };
