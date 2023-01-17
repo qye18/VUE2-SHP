@@ -9,6 +9,7 @@ import Related from '@/pages/detail/related'
 import Recommend from '@/pages/detail/recommend'
 import AddToCartSuccess from '@/pages/addToCartSuccess'
 import ShoppingCart from '@/pages/shoppingCart'
+import Trade from '@/pages/trade'
 export default [
   {
     name:'home',
@@ -98,8 +99,17 @@ export default [
   },
   {
     name:'shoppingCart',
-    path:'shoppingCart',
+    path:'/shoppingCart',
     component:ShoppingCart,
+    meta:{
+      showTopNav:true,
+      hasFooter:true,
+    }
+  },
+  {
+    name:'trade',
+    path:'/trade',
+    component:Trade,
     meta:{
       showTopNav:true,
       hasFooter:true,

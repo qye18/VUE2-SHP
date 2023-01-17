@@ -75,7 +75,7 @@
           </p>
           <p>促销<span>￥0</span></p>
         </div>
-        <button class="pay">结算</button>
+        <button class="pay" @click="$router.push('/trade')">结算</button>
       </div>
     </div>
   </div>
