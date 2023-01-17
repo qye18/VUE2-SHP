@@ -159,7 +159,8 @@
 
   ## 登陆后不能去login
   - 全局守卫中：
-    - 判断token是否存在，如果存在，那么一定登录了。因为退出登录后，会清除store和localStorage里的token。
+    - 判断token是否存在，(如果存在，那么一定登录了。因为退出登录后，会清除store和localStorage里的token。)
+    如果存在，那就阻止去login
     不能用userInfo.name来判断，因为它没有被保存在本地，每一次路由跳转
     都是一次刷新，vuex(store)不是持久性保存，每次刷新数据也会刷新。
     - 要判断token失效的问题
