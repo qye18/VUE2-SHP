@@ -1,6 +1,8 @@
-import {reqRegisterAccount,reqVerificationCode} from '@/api'
+import {reqRegisterAccount,reqVerificationCode, reqUserLogin,reqUserInfo} from '@/api'
 const state = {
-  verificationCode:''
+  verificationCode:'',
+  token:localStorage.getItem('TOKEN'),
+  userInfo:{}
 }
 const actions = {
   async getVerificationCode({commit}, phone){
@@ -18,11 +20,37 @@ const actions = {
     } else {
       return Promise.reject(new Error(result.message))
     }
+  },
+  async getUserLogin({commit},user) {
+    let result = await reqUserLogin(user);
+    // console.log(result);
+    if (result.code == 200) {
+      commit('GETUSERLOGIN',result.data.token);
+      localStorage.setItem('TOKEN',result.data.token)
+      return '登录成功'
+    } else {
+      return Promise.reject(new Error('登录失败'))
+    }
+  },
+  async getUserInfo({commit}) {
+    let result = await reqUserInfo();
+    if (result.code == 200) {
+      commit('GETUSERINFO',result.data);
+      return '登录后获取用户信息成功';
+    } else {
+      return Promise.reject(new Error('登录后获取信息失败'));
+    }
   }
 }
 const mutations = {
   GETVERIFICATIONCODE(state,verificationCode) {
     state.verificationCode = verificationCode;
+  },
+  GETUSERLOGIN(state,token) {
+    state.token = token;
+  },
+  GETUSERINFO(state, userInfo) {
+    state.userInfo = userInfo;
   }
 }
 const getters = {}

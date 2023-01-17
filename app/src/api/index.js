@@ -81,3 +81,14 @@ export const reqRegisterAccount = (data) => {
     data
   })
 }
+
+export const reqUserLogin = (data) => requests({
+  url:'/user/passport/login',
+  method:'post',
+  data
+})
+
+export const reqUserInfo = () => requests({
+  url:'/user/passport/auth/getUserInfo',
+  method:'get'
+})

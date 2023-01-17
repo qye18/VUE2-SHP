@@ -123,3 +123,42 @@
       如果失败则报出错误原因
 
       Promise.all([promiseList])返回成功的promise如果list里的每一个promise都成功，返回失败的promise如果list有任何一个promise失败
+
+# 登录
+  01/15
+  token令牌 - 唯一标识符
+  token存储sessionStorage
+
+  action里不推荐操作state，控制台会监测不到，要提交到mutations里
+
+  得到token后，派发请求获取对应的用户信息，并显示用户
+# 退出登录
+  01/15
+  需要派发退出请求，
+  清除state里的token及用户信息，
+  清除本地存储的token
+
+# 导航守卫
+  全局守卫：只要项目中发生路由变化，就会监听到
+    - 全局前置守卫：跳转之前
+      router.beforeEach((to,from,next) => {
+        <!-- 
+        to: 去的那个路由的信息
+        from: 从哪个路由来的信息
+        next：放行函数 next()放行，如果不执行next(),永远不会跳转
+              next()
+              next(path): 放行到指定路由
+              next(false)：跳转不过去，留在当前
+        -->
+      })
+    - 全局后置守卫：跳转之后
+  路由独享守卫
+  组件内守卫
+
+  # 登录的改进 （登陆后不能去login）
+    - 全局守卫中：
+      - 判断token是否存在，如果存在，那么一定登录了。因为退出登录后，会清除store和localStorage里的token。
+      不能用userInfo.name来判断，因为它没有被保存在本地，每一次路由跳转
+      都是一次刷新，vuex(store)不是持久性保存，每次刷新数据也会刷新。
+
+      - 要判断token失效的问题
