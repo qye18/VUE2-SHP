@@ -7,7 +7,10 @@ const actions = {
   async getShoppingCartList({commit}){
     const result = await reqShoppingCartList();
     if (result.code == 200) {
+      // 如果购物车为空，那result.data也是空，不能读取cartInfoList
+      if (result.data.length != 0) {
       commit("GETSHOPPINGCARTLIST",result.data[0].cartInfoList)
+      }
     }
   },
   async deleteCartItem({commit},skuId) {
