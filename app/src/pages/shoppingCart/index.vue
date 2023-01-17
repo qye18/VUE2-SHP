@@ -137,7 +137,7 @@ export default {
           skuId: cartItem.skuId,
           skuNum: num,
         });
-        console.log("修改购物车数据成功");
+        // console.log("修改购物车数据成功");
         this.$store.dispatch("getShoppingCartList");
       } catch (error) {
         alert("修改购物车数据失败");
@@ -152,7 +152,7 @@ export default {
         await this.$store.dispatch("deleteCartItem", cartItem.skuId);
         this.$store.dispatch("getShoppingCartList");
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
     async checkCartItem(cartItem) {
@@ -164,7 +164,7 @@ export default {
         });
         this.$store.dispatch("getShoppingCartList");
       } catch (error) {
-        console.log(error.message);
+        alert(error.message);
       }
     },
     async checkAllCartItem() {
@@ -173,7 +173,7 @@ export default {
         await this.$store.dispatch('checkAllCartItem',isChecked);
         this.$store.dispatch('getShoppingCartList');
       } catch (error) {
-        console.log(error.message);
+        alert(error.message);
       }
     },
     async deleteAllCheckedItem(){

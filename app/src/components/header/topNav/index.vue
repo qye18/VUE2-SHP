@@ -8,7 +8,7 @@
       </div>
       <div v-else>
         <li><a>{{ userName }}</a></li>
-        <li><a>退出登录</a></li>
+        <li><a @click="userLogout">退出登录</a></li>
       </div>
     </div>
     <div class="nav-right">
@@ -31,10 +31,18 @@ export default {
   name: "topNav",
   computed: {
     userName() {
-      console.log(this.$store.state.user.userInfo.name);
       return this.$store.state.user.userInfo.name;
     },
   },
+  methods: {
+    async userLogout() {
+      try {
+        await this.$store.dispatch('userLogout');
+      } catch (error) {
+        alert(error);
+      }
+    }
+  }
 };
 </script>
 

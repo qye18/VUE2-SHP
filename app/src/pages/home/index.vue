@@ -34,7 +34,9 @@ export default {
   mounted() {
     this.$store.dispatch("getUnitList");
     //改###########################################
-    this.$store.dispatch('getUserInfo');
+    if (this.$store.state.user.token) {
+      this.$store.dispatch('getUserInfo');
+    }
     // setTimeout(() => {
     // console.log(this.$store.state.home.unitList);
     // }, 500);

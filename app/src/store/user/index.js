@@ -1,4 +1,4 @@
-import {reqRegisterAccount,reqVerificationCode, reqUserLogin,reqUserInfo} from '@/api'
+import {reqRegisterAccount,reqVerificationCode, reqUserLogin,reqUserInfo, reqUserLogout} from '@/api'
 const state = {
   verificationCode:'',
   token:localStorage.getItem('TOKEN'),
@@ -38,7 +38,17 @@ const actions = {
       commit('GETUSERINFO',result.data);
       return '登录后获取用户信息成功';
     } else {
-      return Promise.reject(new Error('登录后获取信息失败'));
+      return Promise.reject(new Error(result.message,'登录后获取信息失败'));
+    }
+  },
+  async userLogout({commit}) {
+    let result = await reqUserLogout();
+    if (result.code == 200) {
+      localStorage.removeItem('TOKEN');
+      commit('USERLOGOUT');
+      return '退出登录成功';
+    } else {
+      return Promise.reject(new Error(result.message,': 退出登录失败'));
     }
   }
 }
@@ -51,6 +61,10 @@ const mutations = {
   },
   GETUSERINFO(state, userInfo) {
     state.userInfo = userInfo;
+  },
+  USERLOGOUT(state) {
+    state.token = '';
+    state.userInfo = {};
   }
 }
 const getters = {}
