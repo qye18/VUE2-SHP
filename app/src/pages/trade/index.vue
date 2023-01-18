@@ -134,6 +134,7 @@ export default {
       ],
       currentIndex: 0,
       userComment: "",
+      orderId:''
     };
   },
   methods: {
@@ -154,12 +155,11 @@ export default {
       };
       try {
         let result = await this.$store.dispatch('makeOrder',data);
-        console.log(result);
-        // this.$router.push('/pay');
+        this.orderId = result;
+        this.$router.push({name:'pay',query:{orderId:this.orderId}});
       } catch (error) {
-        
+        alert('提交订单失败')
       }
-      // console.log(data);
     },
   },
   mounted() {
