@@ -5,21 +5,16 @@
       <div class="line trade-row-1">
         <h5 class="title">收件人信息</h5>
         <div class="receiver-info">
-          <li>
-            <p class="chosen"><i>张龙</i>
-            <span>北京市朝阳区远洋天地5号楼<span>15852016643</span></span></p>
-          </li>
-          <li>
-            <p><i>张三</i>
-              <span>北京市北七家镇<span>13522222222</span></span></p>
-          </li>
-          <li>
-            <p><i>李四</i>
-            <span>湖北武汉江夏区东湖网谷<span>13533333333</span></span></p>
-          </li>
-          <li>
-            <p><i>王五</i>
-            <span>广东深圳市宝安区<span>13544444444</span></span></p>
+          <li v-for="(addr, index) in userAddressList" :key="index">
+            <p
+              @click="changeIndex(index)"
+              :class="{ chosen: index == currentIndex }"
+            >
+              <i>{{ addr.name }}</i>
+              <span
+                >{{ addr.address }}<span>{{ addr.phoneNum }}</span></span
+              >
+            </p>
           </li>
         </div>
       </div>
@@ -42,58 +37,13 @@
         <div class="line-2">
           <h5 class="title">商品清单</h5>
           <ul class="item-list">
-            <li>
-              <img src="./images/goods.png" alt="" />
+            <li v-for="order in orderDetailList" :key="order.skuId">
+              <img :src="order.imgUrl" alt="" />
               <div>
                 <div class="l-2-row-1">
-                  <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 小米</p>
-                  <p>￥1299.00</p>
-                  <p>2</p>
-                </div>
-                <!--数量-->
-                <div class="l-2-row-2">
-                  <p>有货</p>
-                  <p>7天无理由退货</p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="./images/goods.png" alt="" />
-              <div>
-                <div class="l-2-row-1">
-                  <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 小米</p>
-                  <p>￥1299.00</p>
-                  <p>2</p>
-                </div>
-                <!--数量-->
-                <div class="l-2-row-2">
-                  <p>有货</p>
-                  <p>7天无理由退货</p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="./images/goods.png" alt="" />
-              <div>
-                <div class="l-2-row-1">
-                  <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 小米</p>
-                  <p>￥1299.00</p>
-                  <p>2</p>
-                </div>
-                <!--数量-->
-                <div class="l-2-row-2">
-                  <p>有货</p>
-                  <p>7天无理由退货</p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="./images/goods.png" alt="" />
-              <div>
-                <div class="l-2-row-1">
-                  <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 小米</p>
-                  <p>￥1299.00</p>
-                  <p>2</p>
+                  <p>{{ order.skuName }}</p>
+                  <p>￥{{ order.orderPrice }}</p>
+                  <p>{{ order.skuNum }}</p>
                 </div>
                 <!--数量-->
                 <div class="l-2-row-2">
@@ -114,6 +64,7 @@
             cols="50"
             rows="10"
             placeholder="建议先与商家沟通确认"
+            v-model="userComment"
           ></textarea>
         </div>
       </div>
@@ -128,8 +79,11 @@
     <div class="line trade-row-6">
       <div class="row-6-line-1">
         <li>
-          <p><span>4</span>件商品,总商品金额: </p>
-          <p>￥254699.00</p>
+          <p>
+            <span>{{ totalNum }}</span
+            >件商品,总商品金额:
+          </p>
+          <p>￥{{ totalAmount }}</p>
         </li>
         <li>
           <p>返现:</p>
@@ -143,7 +97,9 @@
     </div>
     <div class="line trade-row-7">
       <div class="row-7-line-1">
-        <p>应付金额: <span>￥5399.00</span></p>
+        <p>
+          应付金额: <span>￥{{ totalAmount }}</span>
+        </p>
         <p>
           寄送至: <span>广东深圳市宝安区</span> 收货人:
           <span>王五 13544444444</span>
@@ -151,14 +107,71 @@
       </div>
     </div>
     <div class="trade-row-8">
-      <button class="submit">提交订单</button>
+      <button @click="makeOrder" class="submit">提交订单</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Trade",
+  data() {
+    return {
+      userAddressList: [
+        {
+          name: "admin",
+          address: "北京市朝阳区远洋天地5号楼",
+          phoneNum: 15852016643,
+        },
+        { name: "李四", address: "北京市北七家镇", phoneNum: 13522222222 },
+        {
+          name: "王五",
+          address: "湖北武汉江夏区东湖网谷",
+          phoneNum: 13533333333,
+        },
+        { name: "老六", address: "广东深圳市宝安区", phoneNum: 13544444444 },
+      ],
+      currentIndex: 0,
+      userComment: "",
+    };
+  },
+  methods: {
+    changeIndex(index) {
+      this.currentIndex = index;
+    },
+    async makeOrder() {
+      let data = {
+        tradeNo: this.tradeNo,
+        userInfo: {
+          consignee: this.userAddressList[0].name,
+          consigneeTel: this.userAddressList[0].phoneNum,
+          deliveryAddress: this.userAddressList[0].address,
+          paymentWay: "ONLINE",
+          orderComment: this.userComment,
+          orderDetailList: this.orderDetailList,
+        },
+      };
+      try {
+        let result = await this.$store.dispatch('makeOrder',data);
+        console.log(result);
+        // this.$router.push('/pay');
+      } catch (error) {
+        
+      }
+      // console.log(data);
+    },
+  },
+  mounted() {
+    this.$store.dispatch("getUserAddress");
+    this.$store.dispatch("getOrderInfo");
+  },
+  computed: {
+    ...mapGetters(["orderDetailList", "totalAmount", "totalNum", "tradeNo"]),
+    ...mapState({
+      orderInfo: (state) => state.trade.orderInfo,
+    }),
+  },
 };
 </script>
 
@@ -205,9 +218,9 @@ export default {
 
 .trade form .trade-row-1 .receiver-info li p.chosen i,
 .trade form li.chosen {
-  border: 1px solid rgb(227,1,1);
-  box-shadow: inset 0 0 0 1px rgb(227,1,1);
-  background: url('./images/choosed.png') no-repeat right bottom;
+  border: 1px solid rgb(227, 1, 1);
+  box-shadow: inset 0 0 0 1px rgb(227, 1, 1);
+  background: url("./images/choosed.png") no-repeat right bottom;
 }
 
 .trade form .trade-row-1 .receiver-info li p span:hover {
@@ -261,6 +274,10 @@ export default {
 
 .trade form .trade-row-3 .line-2 .item-list {
   padding-left: 20px;
+}
+.trade form .trade-row-3 .line-2 .item-list img {
+  width: 80px;
+  height: 80px;
 }
 
 .trade form .trade-row-3 .line-2 .item-list li {
@@ -320,7 +337,7 @@ export default {
 }
 
 .trade .trade-row-6 .row-6-line-1 li span {
-  color: rgb(227,1,1);
+  color: rgb(227, 1, 1);
 }
 
 .trade .trade-row-7 {
@@ -331,22 +348,22 @@ export default {
   border: 1px solid rgb(220, 220, 220);
 }
 
-.trade .trade-row-7 .row-7-line-1 p:first-child span{
-  color: rgb(227,1,1);
+.trade .trade-row-7 .row-7-line-1 p:first-child span {
+  color: rgb(227, 1, 1);
   font-weight: 600;
   font-size: 14px;
   padding-left: 10px;
 }
 
-.trade .trade-row-7 .row-7-line-1 p:first-child{
+.trade .trade-row-7 .row-7-line-1 p:first-child {
   padding-bottom: 5px;
 }
 
-.trade .trade-row-7 .row-7-line-1 p:nth-child(2){
+.trade .trade-row-7 .row-7-line-1 p:nth-child(2) {
   color: rgb(120, 120, 120);
 }
 
-.trade .trade-row-7 .row-7-line-1 p:nth-child(2) span:nth-child(1){
+.trade .trade-row-7 .row-7-line-1 p:nth-child(2) span:nth-child(1) {
   padding-right: 10px;
 }
 
@@ -354,11 +371,10 @@ export default {
   text-align: right;
 }
 
-.trade .trade-row-8 .submit{
+.trade .trade-row-8 .submit {
   margin-top: 10px;
-  background-color: rgb(227,1,1);
+  background-color: rgb(227, 1, 1);
   color: white;
   padding: 10px 20px;
 }
-
 </style>

@@ -10,6 +10,7 @@ import Recommend from '@/pages/detail/recommend'
 import AddToCartSuccess from '@/pages/addToCartSuccess'
 import ShoppingCart from '@/pages/shoppingCart'
 import Trade from '@/pages/trade'
+import Pay from '@/pages/pay'
 export default [
   {
     name:'home',
@@ -110,6 +111,15 @@ export default [
     name:'trade',
     path:'/trade',
     component:Trade,
+    meta:{
+      showTopNav:true,
+      hasFooter:true,
+    }
+  },
+  {
+    name:'pay',
+    path:'/pay',
+    component:Pay,
     meta:{
       showTopNav:true,
       hasFooter:true,

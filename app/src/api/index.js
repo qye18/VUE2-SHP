@@ -97,3 +97,19 @@ export const reqUserLogout = () => requests({
   url:'/user/passport/logout',
   method:'get'
 })
+
+export const reqUserAddress = () => requests({
+  url:'/user/userAddress/auth/findUserAddressList',
+  method:'get'
+})
+
+export const reqOrderInfo = () => requests({
+  url:'/order/auth/trade',
+  method:'get'
+})
+
+export const reqMakeOrder = (tradeNo, data) => requests({
+  url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,
+  method:'post',
+  data
+})
