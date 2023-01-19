@@ -4,8 +4,8 @@
       <h6>订单提交成功，请您及时付款，以便尽快为您发货~~</h6>
       <div>
         <p>请您在提交<span>4小时</span>之内完成支付, 超时
-      订单会自动取消，订单号: 145687</p>
-      <p>应付金额: <span>￥17,654</span></p>
+      订单会自动取消，订单号: {{$route.query.orderId}}</p>
+      <p>应付金额: <span>￥{{ pmtInfo.totalFee }}</span></p>
       </div>
     </div>
     <div class="pay-row-2">
@@ -53,23 +53,48 @@
           </ul>
         </div>
         <div class="submit">
-          <button class="submitPmt">立即支付</button>
+          <!-- <button class="submitPmt">立即支付</button> -->
+        <el-button type="text" class="submitPmt" @click="open">立即支付</el-button>
         </div>
         <div class="row-3-line-3">
           <h6>其他支付方式</h6>
         </div>
       </div>
+      
+        <!-- <el-button type="text" @click="open">点击打开 Message Box</el-button> -->
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import QRCode from 'qrcode'
 export default {
   name:'pay',
   data() {
     return {
     }
   },
+  methods:{
+    async open() {
+      let url = await QRCode.toDataURL(this.pmtInfo.codeUrl); 
+        this.$alert(`<img src="${url}"/>`,'微信支付', {
+          dangerouslyUseHTMLString: true,
+          center:true,
+          showClose:false,
+          showCancelButton:true,
+          confirmButtonText:'已支付成功',
+          cancelButtonText:'支付遇见问题',
+        });
+      }
+      
+  },
   mounted() {
+    this.$store.dispatch('getPayInfo', this.$route.query.orderId);
+  },
+  computed:{
+    ...mapState({
+      pmtInfo: state => state.pay.pmtInfo
+    })
   }
 }
 </script>
@@ -185,6 +210,7 @@ export default {
   .pay .pay-row-3 .submitPmt {
     margin-top: 20px;
     background-color: rgb(227,1,1);
+    border-radius: 0;
     color: white;
     padding: 10px 20px;
     font-size: 14px;

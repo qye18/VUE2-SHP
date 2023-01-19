@@ -113,3 +113,8 @@ export const reqMakeOrder = (tradeNo, data) => requests({
   method:'post',
   data
 })
+
+export const reqPayInfo = (orderId) => requests({
+  url:`/payment/weixin/createNative/${orderId}`,
+  method:'get'
+})
