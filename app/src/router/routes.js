@@ -11,6 +11,8 @@ import AddToCartSuccess from '@/pages/addToCartSuccess'
 import ShoppingCart from '@/pages/shoppingCart'
 import Trade from '@/pages/trade'
 import Pay from '@/pages/pay'
+import PaySuccess from '@/pages/paySuccess'
+
 export default [
   {
     name:'home',
@@ -120,6 +122,15 @@ export default [
     name:'pay',
     path:'/pay',
     component:Pay,
+    meta:{
+      showTopNav:true,
+      hasFooter:true,
+    }
+  },
+  {
+    name:'paySuccess',
+    path:'/paySuccess',
+    component:PaySuccess,
     meta:{
       showTopNav:true,
       hasFooter:true,

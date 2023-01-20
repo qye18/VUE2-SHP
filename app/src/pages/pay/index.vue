@@ -85,6 +85,7 @@ export default {
           confirmButtonText:'已支付成功',
           cancelButtonText:'支付遇见问题',
         });
+      this.$router.push({name:'paySuccess'})
       }
       
   },
