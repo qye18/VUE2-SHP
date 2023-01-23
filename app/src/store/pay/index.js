@@ -1,4 +1,4 @@
-import {reqPayInfo} from '@/api'
+import {reqPayInfo, reqPayStatus} from '@/api'
 
 const state = {
   pmtInfo: {}
@@ -8,6 +8,15 @@ const actions = {
     let result = await reqPayInfo(orderId);
     if (result.code == 200) {
       commit('GETPAYINFO', result.data);
+    }
+  },
+  async getPayStatus({commit},orderId) {
+    let result = await reqPayStatus(orderId);
+    console.log(result);
+    if (result.code == 200) {
+      return 200
+    } else {
+      return 0
     }
   }
 };

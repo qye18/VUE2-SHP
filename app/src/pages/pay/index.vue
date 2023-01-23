@@ -72,6 +72,8 @@ export default {
   name:'pay',
   data() {
     return {
+      payTimer:null,
+      code:null
     }
   },
   methods:{
@@ -84,8 +86,31 @@ export default {
           showCancelButton:true,
           confirmButtonText:'已支付成功',
           cancelButtonText:'支付遇见问题',
+          beforeClose: (action, instance, done) => {
+            if (action == 'confirm') {
+              if (this.code == 200) {
+                done();
+                clearInterval(this.payTimer);
+                this.payTimer =null;
+                this.$router.push({name:'paySuccess'})
+              }
+            }
+          }
         });
-      this.$router.push({name:'paySuccess'})
+
+        if (!this.payTimer) {
+          this.payTimer = setInterval(async () => {
+          this.code = await this.$store.dispatch('getPayStatus',this.$route.query.orderId);
+          if (this.code == 200 ) {
+            clearInterval(this.payTimer);
+            this.payTimer = null;
+            this.$msgbox.close();
+            this.$router.push({name:'paySuccess'})
+          }
+        }, 1000);
+        }
+        
+      // this.$router.push({name:'paySuccess'})
       }
       
   },
