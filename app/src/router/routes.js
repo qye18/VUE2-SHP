@@ -13,6 +13,9 @@ import Trade from '@/pages/trade'
 import Pay from '@/pages/pay'
 import PaySuccess from '@/pages/paySuccess'
 import UserCenter from '@/pages/userCenter'
+import MyOrder from '@/pages/userCenter/myOrder'
+import GroupOrder from '@/pages/userCenter/groupOrder'
+
 export default [
   {
     name:'home',
@@ -143,6 +146,27 @@ export default [
     meta:{
       showTopNav:true,
       hasFooter:true,
-    }
+    },
+    redirect: {name:'myOrder'},
+    children:[
+      {
+        name:'myOrder',
+        path:'myOrder',
+        component: MyOrder,
+        meta:{
+          showTopNav:true,
+          hasFooter:true,
+        }
+      },
+      {
+        name:'groupOrder',
+        path:'groupOrder',
+        component: GroupOrder,
+        meta:{
+          showTopNav:true,
+          hasFooter:true,
+        }
+      }
+    ]
   }
 ]
