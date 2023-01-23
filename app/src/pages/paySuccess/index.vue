@@ -2,8 +2,8 @@
   <div class="pay-success">
     <h3>恭喜你，支付成功啦！</h3>
     <div class="buttons">
-      <button>查看订单</button>
-      <button>继续购物</button>
+      <button @click="$router.push({name:'userCenter'})">查看订单</button>
+      <button @click="$router.push({name:'home'})">继续购物</button>
     </div>
   </div>
 </template>

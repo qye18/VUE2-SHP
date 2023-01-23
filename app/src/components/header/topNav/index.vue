@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="nav-right">
-      <li><a href="#">我的订单</a></li>
+      <li><router-link to="/userCenter">我的订单</router-link></li>
       <li>
         <router-link :to="{ name: 'shoppingCart' }">我的购物车</router-link>
       </li>

@@ -12,7 +12,7 @@ import ShoppingCart from '@/pages/shoppingCart'
 import Trade from '@/pages/trade'
 import Pay from '@/pages/pay'
 import PaySuccess from '@/pages/paySuccess'
-
+import UserCenter from '@/pages/userCenter'
 export default [
   {
     name:'home',
@@ -131,6 +131,15 @@ export default [
     name:'paySuccess',
     path:'/paySuccess',
     component:PaySuccess,
+    meta:{
+      showTopNav:true,
+      hasFooter:true,
+    }
+  },
+  {
+    name:'userCenter',
+    path:'/userCenter',
+    component: UserCenter,
     meta:{
       showTopNav:true,
       hasFooter:true,

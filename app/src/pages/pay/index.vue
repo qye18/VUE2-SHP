@@ -88,13 +88,14 @@ export default {
           cancelButtonText:'支付遇见问题',
           beforeClose: (action, instance, done) => {
             if (action == 'confirm') {
-              if (this.code == 200) {
+              // 注掉省钱，实际情况不应该注掉
+              // if (this.code == 200) {
                 done();
                 clearInterval(this.payTimer);
                 this.payTimer =null;
                 this.$router.push({name:'paySuccess'})
               }
-            }
+            // }
           }
         });
 
