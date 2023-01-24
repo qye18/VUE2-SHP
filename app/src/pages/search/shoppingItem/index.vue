@@ -7,7 +7,7 @@
           id:good.id
         }
       }">
-      <img :src="good.defaultImg" alt="" />
+      <img v-lazy="good.defaultImg" alt="" />
       </router-link>
     </div>
     <div class="item-detail">

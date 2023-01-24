@@ -175,3 +175,23 @@
         全局守卫
           - 判断完token后，还要判断跳转的页面，如果跳转的不是login页面，再判断仓库是否有userInfo.name，如果没有就要发送请求（当前已经登录了，所以可以获取信息了）
           - 不能用userInfo来判断，因为userInfo是一个对象，不管他是不是空的，结果都为真。
+  
+# 图片懒加载
+  2021/01/23 还用 1.3.3版本
+  npmjs: vue-lazyload
+
+  ## 原理：
+
+    myPlugin.install = function(Vue, options) {
+      Vue.directive(options.name, (element,params) => {
+        element.innerHTML = params.sth
+      })
+    }
+    Vue.use(myPlugin, {
+    name:'upper'
+    });
+    - 这种写法可以把{}传给自定义插件plugin, options接收
+    - 在组件中可以使用v-upper指令
+    - directive让element原来的内容被替代
+
+    同理，懒加载自定义的gif动图被真正的图片数据替代

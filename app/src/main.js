@@ -8,19 +8,19 @@ import store from '@/store';
 import '@/mock/mockServer';
 // import Swiper from 'swiper'
 // import 'swiper/swiper-bundle.min.css'
-// import elementUI from 'element-ui'
-// import 'element-ui/lib/theme-chalk/index.css'
-// import { Carousel, CarouselItem  } from 'element-ui';
 import {MessageBox, Button, Pagination} from 'element-ui';
 Vue.component(MessageBox.name,MessageBox);
 Vue.component(Button.name,Button);
 Vue.component(Pagination.name, Pagination);
+
+import catGif from './assets/1.gif'
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload, {
+  loading: catGif
+});
+
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
-// import {reqCategoryList} from '@/api/index'
-// Vue.use(elementUI)
-// Vue.component(Carousel.name, Carousel);
-// Vue.component(CarouselItem.name, CarouselItem);
 
 Vue.config.productionTip = false
 
