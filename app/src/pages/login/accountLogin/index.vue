@@ -66,6 +66,9 @@ export default {
           password &&
           (await this.$store.dispatch("getUserLogin", { phone, password }));
         let redirectPath = this.$route.query.redirect || '/home';
+        if (redirectPath.indexOf('pay')) {
+          redirectPath = '/userCenter';
+        }
         this.$router.push(redirectPath);
       } catch (error) {
         alert(error)

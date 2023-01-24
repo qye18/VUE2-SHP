@@ -119,6 +119,14 @@ export default [
     meta:{
       showTopNav:true,
       hasFooter:true,
+    },
+    // 交易页面必须从购物页来，其他不行
+    beforeEnter: (to, from, next) => {
+      if (from.path == 'shoppingCart') {
+        next();
+      }else {
+        next(false);
+      }
     }
   },
   {
@@ -128,6 +136,13 @@ export default [
     meta:{
       showTopNav:true,
       hasFooter:true,
+    },
+    beforeEnter: (to, from, next) => {
+      if (from.path == 'trade') {
+        next();
+      } else {
+        next(false);
+      }
     }
   },
   {
@@ -137,6 +152,13 @@ export default [
     meta:{
       showTopNav:true,
       hasFooter:true,
+    },
+    beforeEnter: (to, from, next) => {
+      if (from.path == 'pay') {
+        next();
+      } else {
+        next(false);
+      }
     }
   },
   {
