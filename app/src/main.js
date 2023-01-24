@@ -11,9 +11,10 @@ import '@/mock/mockServer';
 // import elementUI from 'element-ui'
 // import 'element-ui/lib/theme-chalk/index.css'
 // import { Carousel, CarouselItem  } from 'element-ui';
-import {MessageBox, Button} from 'element-ui';
-Vue.component(MessageBox.name,MessageBox)
-Vue.component(Button.name,Button)
+import {MessageBox, Button, Pagination} from 'element-ui';
+Vue.component(MessageBox.name,MessageBox);
+Vue.component(Button.name,Button);
+Vue.component(Pagination.name, Pagination);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 // import {reqCategoryList} from '@/api/index'

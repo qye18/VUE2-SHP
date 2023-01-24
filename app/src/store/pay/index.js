@@ -1,7 +1,8 @@
-import {reqPayInfo, reqPayStatus} from '@/api'
+import {reqPayInfo, reqPayStatus, reqOrderList} from '@/api'
 
 const state = {
-  pmtInfo: {}
+  pmtInfo: {},
+  orderList: {}
 };
 const actions = {
   async getPayInfo({commit},orderId) {
@@ -18,11 +19,20 @@ const actions = {
     } else {
       return 0
     }
+  },
+  async getOrderList({commit},data) {
+    let result = await reqOrderList(data.page, data.limit);
+    if (result.code == 200) {
+      commit('GETORDERLIST', result.data);
+    }
   }
 };
 const mutations = {
   GETPAYINFO(state, pmtInfo) {
     state.pmtInfo = pmtInfo;
+  },
+  GETORDERLIST(state, orderList) {
+    state.orderList = orderList;
   }
 };
 const getters = {};

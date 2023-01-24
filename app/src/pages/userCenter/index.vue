@@ -43,6 +43,8 @@ export default {
     width: 1155px;
     margin: 30px auto;
     display: flex;
+  position: relative;
+
   }
   .userCenter .left {
     width: 20%;
@@ -50,8 +52,6 @@ export default {
   }
   .userCenter .right {
     width: 80%;
-    height: 50px;
-
   }
 
   .userCenter .left ul > li{
