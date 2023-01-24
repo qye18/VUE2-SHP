@@ -38,6 +38,7 @@ export default {
     async userLogout() {
       try {
         await this.$store.dispatch('userLogout');
+        this.$router.push('home');
       } catch (error) {
         alert(error);
       }

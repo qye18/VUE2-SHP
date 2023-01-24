@@ -39,7 +39,13 @@ router.beforeEach(async (to, from, next) => {
   }
   // 未登录
   else {
-    next()
+    // console.log(to.path);
+    if (to.path.indexOf('userCenter') != -1 || to.path.indexOf('pay') != -1 ||
+    to.path.indexOf('trade') != -1) {
+      next('/login?redirect='+to.path);
+    } else {
+      next();
+    }
   }
 })
 
