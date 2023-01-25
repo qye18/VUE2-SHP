@@ -1,5 +1,5 @@
-import Home from '@/pages/home'
-import Login from '@/pages/login'
+// import Home from '@/pages/home'
+// import Login from '@/pages/login'
 import Register from '@/pages/register'
 import Search from '@/pages/search'
 import Detail from '@/pages/detail'
@@ -20,7 +20,7 @@ export default [
   {
     name:'home',
     path:'/home',
-    component:Home,
+    component:() => import("@/pages/home"), // 路由懒加载
     meta:{
       hasFooter:true,
       showTopNav:true,
@@ -30,7 +30,7 @@ export default [
   {
     name:'login',
     path:"/login",
-    component:Login,
+    component:() => import("@/pages/login"),
     redirect:{name:'accountLogin'},
     meta:{
       hasFooter:false,

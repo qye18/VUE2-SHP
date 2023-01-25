@@ -195,3 +195,54 @@
     - directive让element原来的内容被替代
 
     同理，懒加载自定义的gif动图被真正的图片数据替代
+
+# 表单验证
+vee-validate (p108)
+  - 注册输入格式验证
+
+# 路由懒加载
+  - 只有在路由被访问时才加载对应组件
+  # 使用（改变import方式）：
+    import Home from "@/pages/home"
+    改为
+    const Home = () => import("@/pages/home")
+    component: Home
+    或直接：
+    component: () => import("@/pages/home")
+
+# 上线
+  ## 打包
+  npm run build
+
+  打包后js中的map文件：提示项目中哪个文件哪行报错，不需要可以不生成map文件
+  在vue.config.js中设置：
+    productionSourceMap:false,
+
+  ## 购买云服务器
+    腾讯云，阿里云
+
+  ## 用xshell登录服务器
+
+  ## xftp 7:可以上传本地文件到远程服务器（可视化）
+    就不用自己scp了
+
+  ## nginx
+    - 定义：http和反向代理web服务器
+    - 使用：
+      1. 在xshell中进入根目录下的etc文件夹
+      2. 如果没有安装nginx，yum install nginx
+      3. 编辑nginx.cpnf文件，vim nginx.cpnf
+       
+        解决：访问购买的服务器ip地址就可以访问到尚品汇项目
+        location / {
+          root    /root/jch/www/shangpinhui/dist;
+          index   index.html;
+          try_files $url $url/ /index.html;
+        }
+
+        解决：数据来自于另一个ip地址：http://gmall-h5-api.atguigu.cn还是（http://39.98.123.211），自己的服务器如何获取？
+        location /api {
+          proxy_pass http://182.92.128.115;
+        }
+  ## 运行nginx服务器
+    service nginx start
